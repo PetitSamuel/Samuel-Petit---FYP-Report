@@ -1,0 +1,132 @@
+\documentclass[a4paper,oneside,12pt]{book}
+
+\newcommand{\thesistitle}{French News Sentiment Analysis on COVID-19} % Your thesis title, this is used in the title and abstract
+\newcommand{\degree}{B. A. (Mod.) Computer Science} % Your degree name, this is used in the title page and abstract
+\newcommand{\typeofthesis}{dissertation} % dissertation, Final Year Project, report, etc.
+\newcommand{\authorname}{Samuel Petit}
+
+\newcommand{\keywords}{this, that, more} % Keywords for your thesis
+\newcommand{\school}{\href{http://www.scss.tcd.ie}{School of Computer Science and Statistics}} % Your school's name and URL, this is used in the title page
+\newcommand{\schoolAddress}{O’Reilly Institute, Trinity College, Dublin 2, Ireland} % Your school's name and URL, this is used in the title page
+
+%% Comment out the next line if you don't want a department to appear
+\newcommand{\trinity}{\href{https://www.tcd.ie/}{Trinity College}} 
+\newcommand{\TRINITY}{\href{https://www.tcd.ie/}{TRINITY COLLEGE}} 
+
+\AtBeginDocument{
+\hypersetup{pdftitle=\thesistitle} % Set the PDF's title to your title
+\hypersetup{pdfauthor=\authorname} % Set the PDF's author to your name
+\hypersetup{pdfkeywords=\keywords} % Set the PDF's keywords to your keywords
+\hypersetup{pdfsubject=\degree} % Set the PDF's keywords to your keywords
+}
+
+%% Language and font encodings
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csvsimple}
+
+%% Bibliographical stuff
+\usepackage[round,sort,comma,numbers]{natbib}
+
+%% Document size
+% include showframe as an option if you want to see the boxes
+\usepackage[a4paper,top=2.54cm,bottom=2.54cm,left=2.54cm,right=2.54cm,headheight=16pt]{geometry}
+\setlength{\marginparwidth}{2cm}
+%% Useful packages
+\usepackage{amsmath}
+\usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
+\usepackage[pdftex]{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=black]{hyperref}
+\usepackage{caption} % if no caption, no colon
+\usepackage{sfmath} %use sans-serif in the maths sections too
+\usepackage[parfill]{parskip}    % Begin paragraphs with an empty line rather than an indent
+\usepackage{setspace} % to permit one-and-a-half or double spacing
+\usepackage{enumerate} % fancy enumerations like (i) (ii) or (a) (b) and suchlike
+\usepackage{booktabs} % To thicken table lines
+\usepackage{fancyhdr}
+
+\pagestyle{plain} % Embrace simplicity!
+
+\renewcommand{\familydefault}{\sfdefault} %use the sans-serif font as default
+
+\renewcommand{\theequation}{\arabic{equation}} %% use continuous equation numbers
+
+% Setup auto CSV to table commands 
+\makeatletter
+\csvset{
+  autotabularcenter/.style={
+    file=#1,
+    after head=\csv@pretable\begin{tabular}{|*{\csv@columncount}{c|}}\csv@tablehead,
+    table head=\hline\csvlinetotablerow\\\hline,
+    late after line=\\,
+    table foot=\\\hline,
+    late after last line=\csv@tablefoot\end{tabular}\csv@posttable,
+    command=\csvlinetotablerow},
+  autobooktabularcenter/.style={
+    file=#1,
+    after head=\csv@pretable\begin{tabular}{*{\csv@columncount}{c}}\csv@tablehead,
+    table head=\toprule\csvlinetotablerow\\\midrule,
+    late after line=\\,
+    table foot=\\\bottomrule,
+    late after last line=\csv@tablefoot\end{tabular}\csv@posttable,
+    command=\csvlinetotablerow},
+}
+\makeatother
+\newcommand{\csvautotabularcenter}[2][]{\csvloop{autotabularcenter={#2},#1}}
+\newcommand{\csvautobooktabularcenter}[2][]{\csvloop{autobooktabularcenter={#2},#1}}
+
+%% Format Chapter headings appropriately
+\usepackage{titlesec}
+\titleformat{\chapter}[hang] 
+{\normalfont\huge\bfseries}{\thechapter}{1cm}{} 
+
+\title{\thesistitle}
+\author{\authorname}
+
+\frontmatter
+\begin{document}
+\input{title/title.tex}
+\pagenumbering{roman}
+\section*{\Huge{Declaration}}
+\vspace{1cm}
+I hereby declare that this \typeofthesis\ is entirely my own work and that it has not been submitted as an exercise for a degree at this or any other university.
+
+\vspace{1cm}
+I have read and I understand the plagiarism provisions in the General Regulations of the University Calendar for the current year, found at \url{http://www.tcd.ie/calendar}.
+\vspace{1cm}
+
+I have also completed the Online Tutorial on avoiding plagiarism `Ready Steady Write', located at \url{http://tcd-ie.libguides.com/plagiarism/ready-steady-write}.
+\vspace{3cm}
+
+Signed:~\rule{5cm}{0.3pt}\hfill Date:~\rule{5cm}{0.3pt}
+
+\chapter*{Abstract}
+
+TODO % no more that around 400 words on a separate page
+
+\newpage
+\onehalfspacing\raggedright %\raggedright turns off justification and hypenation
+
+\section*{\Huge{Acknowledgements}}
+
+TODO
+% I would like to thank my supervisor Professor Khurshid Ahmad for introducing me to this topic and guiding me throughout this project. I started working on this topic with very little knowledge on the topics covered in this thesis and I have no doubt that your supervision and continued support throughout the year was a key factor in completing this project.
+
+\tableofcontents
+
+\mainmatter
+\listoffigures
+\listoftables
+\input{introduction/introduction.tex}
+\input{lit_review/lit_review}
+\input{method/method}
+\input{evaluation/evaluation.tex}
+\input{conclusion/conclusion.tex}
+\bibliographystyle{unsrtnat}
+\bibliography{bibs/sample}
+\appendix
+\renewcommand{\thechapter}{}
+\input{appendix/appendix.tex}
+\end{document}

@@ -1,0 +1,41 @@
+\chapter{Evaluation}\label{Evalutation}
+
+This chapter introduces the results obtained from the steps detailed in the previous chapter. It begins with a discussion and an overview of the corpus collected. Then, a section presenting sentiment analysis as well as the frequency of term mentions within the previously created specialist dictionaries (Chapter \ref{Data Collection}). Finally, a statistical analysis will be performed such as to identify any potential relationship between the presented variables. 
+
+\section{Data Collection}
+
+From the original 369,569 articles downloaded as previously detailed (Chapter \ref{Collecting Data}), a total of 305,454 were loaded into the database after date and source filtering, removing a total of 17.34\% from the full corpus. Table \ref{tab: corpus size} includes key information with regards to  the size of the corpus. A second table, Table \ref{tab: articles overview} displays core statistics relating to sources, we find that on average sources have 1351.57 articles with a very high standard deviation (3220.96) which means that the sources article counts is heavily dispersed, as we can see looking at the minimum and maximum article count per source of 1 and 30,767 respectively, we can clearly see how that can be the case.
+
+\begin{table}[htb]
+\centering
+\caption{Corpus Size Details}
+\label{tab: corpus size}
+\begin{tabular}{lll}
+\hline
+Sources & Articles & Words \\ \hline
+226 & 305,454 & 167,800,491
+\end{tabular}
+\end{table}
+
+\begin{table}[htb]\label{tab: articles overview}
+\centering
+\begin{tabular}{@{}lllllll@{}}
+\caption{Articles Per Source Statistics Overview}
+\toprule
+ & Mean & Std Dev & Skewness & Kurtosis & Minimum & Maximum \\ \midrule
+Articles per Source & 1351.57 & 3220.96 & 6.64 & 40.31 & 1 & 30,767 \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htb]
+\caption{Article Breakdown Per Source (first 30 sources)}
+\label{tab:article stat source}
+\centering
+\csvautobooktabularcenter{evaluation/sources_stats.csv}
+\end{table}
+
+\section{Data Analysis}
+
+\section{Sentiment Analysis}
+
+\section{Statistical Analysis}
