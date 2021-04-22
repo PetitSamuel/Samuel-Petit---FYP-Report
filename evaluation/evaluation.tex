@@ -95,6 +95,37 @@ Disgust  & 1.81\%  & 1.12\%  & 1.2009   & 3.6075   \\ \bottomrule
 \end{tabular}
 \end{table}
 
+\begin{landscape}
+\begin{table}[]
+\caption{Correlation Matrix of Sentiment and Government COVID-19 Metrics}
+\label{tab:sentiment correlation}
+\centering
+\resizebox{.82\paperheight}{!}{%
+\begin{tabular}{@{}|c|llllllllllllllll|@{}}
+\toprule
+\textit{} & \multicolumn{1}{c}{\textit{ArticleCount}} & \multicolumn{1}{c}{\textit{Cases(G)}} & \multicolumn{1}{c}{\textit{Death(G)}} & \multicolumn{1}{c}{\textit{Vaccine(G)}} & \multicolumn{1}{c}{\textit{Vaccine(S)}} & \multicolumn{1}{c}{\textit{Virus(S)}} & \multicolumn{1}{c}{\textit{Death(S)}} & \multicolumn{1}{c}{\textit{Length}} & \multicolumn{1}{c}{\textit{Pos}} & \multicolumn{1}{c}{\textit{Neg}} & \multicolumn{1}{c}{\textit{Joy}} & \multicolumn{1}{c}{\textit{Fear}} & \multicolumn{1}{c}{\textit{Sadness}} & \multicolumn{1}{c}{\textit{Anger}} & \multicolumn{1}{c}{\textit{Surprise}} & \multicolumn{1}{c|}{\textit{Disgust}} \\ \midrule
+\textit{ArticleCount} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Cases(G)} & \textbf{0.04} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Death(G)} & \textbf{0.50} & \textbf{0.43} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Vaccine(G)} & \textbf{0.08} & \textbf{0.45} & \textbf{0.28} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Vaccine(S)} & \textbf{0.07} & \textbf{0.44} & \textbf{0.48} & \textbf{0.58} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Virus(S)} & \textbf{-0.21} & \textbf{-0.29} & \textbf{-0.15} & \textbf{-0.26} & \textbf{-0.19} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Death(S)} & \textbf{-0.13} & \textbf{-0.28} & \textbf{0.01} & \textbf{-0.22} & \textbf{-0.25} & \textbf{0.63} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Length} & \textbf{0.99} & \textbf{-0.01} & \textbf{0.48} & \textbf{0.03} & \textbf{0.00} & \textbf{-0.17} & \textbf{-0.08} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Pos} & \textbf{0.08} & \textbf{-0.01} & \textbf{-0.02} & \textbf{-0.12} & \textbf{0.18} & \textbf{0.12} & \textbf{-0.04} & \textbf{0.02} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Neg} & \textbf{0.18} & \textbf{-0.07} & \textbf{0.05} & \textbf{-0.19} & \textbf{0.01} & \textbf{0.20} & \textbf{0.10} & \textbf{0.17} & \textbf{0.62} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Joy} & \textbf{-0.05} & \textbf{-0.12} & \textbf{-0.15} & \textbf{-0.16} & \textbf{0.02} & \textbf{0.18} & \textbf{0.03} & \textbf{-0.06} & \textbf{0.50} & \textbf{0.02} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Fear} & \textbf{0.14} & \textbf{-0.11} & \textbf{0.02} & \textbf{-0.21} & \textbf{-0.06} & \textbf{0.10} & \textbf{0.21} & \textbf{0.14} & \textbf{0.59} & \textbf{0.88} & \textbf{0.06} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Sadness} & \textbf{0.18} & \textbf{-0.14} & \textbf{-0.02} & \textbf{-0.29} & \textbf{-0.15} & \textbf{0.06} & \textbf{0.13} & \textbf{0.18} & \textbf{0.64} & \textbf{0.71} & \textbf{0.18} & \textbf{0.76} & 1.00 & \textbf{} & \textbf{} & \textbf{} \\
+\textit{Anger} & \textbf{0.35} & \textbf{0.02} & \textbf{0.09} & \textbf{-0.16} & \textbf{0.05} & \textbf{-0.16} & \textbf{-0.10} & \textbf{0.33} & \textbf{0.56} & \textbf{0.72} & \textbf{0.06} & \textbf{0.69} & \textbf{0.64} & 1.00 & \textbf{} & \textbf{} \\
+\textit{Surprise} & \textbf{0.24} & \textbf{-0.12} & \textbf{-0.08} & \textbf{-0.30} & \textbf{-0.16} & \textbf{0.01} & \textbf{0.04} & \textbf{0.22} & \textbf{0.61} & \textbf{0.55} & \textbf{0.26} & \textbf{0.51} & \textbf{0.69} & \textbf{0.71} & 1.00 & \textbf{} \\
+\textit{Disgust} & \textbf{-0.06} & \textbf{-0.19} & \textbf{-0.10} & \textbf{-0.18} & \textbf{-0.06} & \textbf{0.26} & \textbf{0.16} & \textbf{-0.05} & \textbf{0.23} & \textbf{0.70} & \textbf{0.07} & \textbf{0.56} & \textbf{0.22} & \textbf{0.31} & \textbf{0.19} & 1.00 \\ \bottomrule
+\end{tabular}%
+}
+\emph{(G) Specifies a government provided value, (S) represents a computed sentiment on the corpus. Bold values represent a statistical significance of p < 0.05.}
+\end{table}
+\end{landscape}
+
 \subsection{Virus Mentions}
 
 The virus dictionary is the largest of all three so it is no surprise that the average percentage of a word is of 1.39\%, the standard deviation is of 3.18\% which shows that a select set of words represent most of the mentions. This is confirmed in Table \ref{tab:virus freqs} which shows the fifteen most mentioned terms over the corpus, clearly the first seven terms make up most of the mentions. In total, words in this dictionary have been found 2,250,684 times in the corpus which makes for a total of 1.34\% of all words within the dictionary.
