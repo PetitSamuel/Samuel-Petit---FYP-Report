@@ -244,7 +244,7 @@ All that is left is to iterate through those matches, for each word retrieve the
 
 Some sentiments systems will act as a classifiers, whether it is machine learning or lexicon based, by returning "positive" or "negative" for a specific article. This system does not and keeps both the positive and negative scores obtained from an article, it provides more details useful to the statistical analysis.
 
-\subsection{Output Aggregating}
+\subsection{Output Aggregating}\label{chap: output aggregating}
 
 The final step of the sentiment analysis system is to format the output such that it can be used for a statistical analysis. To do so, information about the corpus as well as its computed sentiment scores are grouped daily and retrieved from the database. Official data from the french government\footnote{\url{https://www.data.gouv.fr/en/datasets/donnees-relatives-a-lepidemie-de-covid-19-en-france-vue-densemble/}} is appended to the sentiment data. Metrics used from the french government include: the number of confirmed COVID-19 cases, number of deaths and the number of first vaccine injections, corresponding to the data points "casConfirmes", "deces" and "nouvellesPremieresInjections" respectively in the summary data set.
 

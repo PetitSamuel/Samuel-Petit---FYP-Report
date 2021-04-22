@@ -188,7 +188,9 @@ exécution   & 0.56\%  \\
 
 \subsection{Correlation}
 
-TODO: Describe and explain table 4.10
+Table \ref{tab:sentiment correlation} shows an overview of the correlations found between the computed sentiment variables as well as France's COVID-19 data provided by the french government (Chapter \ref{chap: output aggregating}). Bold values are statistically significant with P < 0.05.
+
+The number of daily articles is found to be positively correlated with the death count (0.50) as well as negativity, fear, sadness, anger and surprise, but is found to be negatively correlated with both virus and death sentiment. The number of new covid cases is found to be positively correlated with the number of daily death, vaccinations and new cases but is found to be negatively correlated with both virus and death sentiment, as well as joy, fear, surprise and disgust. Surprisingly, the number of daily deaths is not correlated with death sentiment. Instead it is found to be positively correlated with the vaccination rate and sentiment, as well as the average article length. It is also found to be negatively correlated with virus sentiment, joy and disgust. The daily vaccination rate is unsurprisingly found to be positively correlated (0.58) with vaccine sentiment, however, it is also negatively correlated with virus and death sentiment, as well as all of the FEEL recorded sentiments. It is surprising that positive terms are positively correlated with negative terms (0.62), in fact it is found that most of the FEEL recorded emotions are positively correlated. To finish, vaccine sentiment is positively correlated with death sentiment (0.63).
 
 \begin{landscape}
 \begin{table}[]
@@ -222,3 +224,5 @@ TODO: Describe and explain table 4.10
 \end{landscape}
 
 \subsection{TODO}
+
+TODO: causality test, VAR
