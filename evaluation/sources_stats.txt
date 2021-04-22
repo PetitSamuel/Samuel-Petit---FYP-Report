@@ -1,4 +1,4 @@
-Source,Article Count,Word Count,Mean Word Count
+Source (First 30),Article Count,Word Count,Mean Word Count
 Agence France Presse,30767,14808082,481
 Lefigaro.fr,21978,12111314,551
 Le Dauphiné Libéré,17888,6334269,354
