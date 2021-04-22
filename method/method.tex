@@ -156,11 +156,11 @@ The Virus dictionary is the largest out of the three as it is also the most vast
 
 \subsubsection{Vaccine}
 
-Similarly, this lexicon aims to quantify the presence of vaccination-related words in articles. It consists of twenty eight words which are displayed in Table \ref{tab:virus lexicon}. The words included consist of a lexicon around vaccination as well as the names of the available COVID-19 vaccines or companies producing them.
+Similarly, this lexicon aims to quantify the presence of vaccination-related words in articles. It consists of twenty eight words which are displayed in Table \ref{tab:vaccine lexicon}. The words included consist of a lexicon around vaccination as well as the names of the available COVID-19 vaccines or companies producing them.
 
 \begin{table}[htb]
 \caption{Vaccine Lexicon}
-\label{tab:virus lexicon}
+\label{tab:vaccine lexicon}
 \centering
 \csvautobooktabularcenter{method/vaccine_lexicon.txt}
 \end{table}
@@ -243,6 +243,10 @@ Using a lexicon's compiled regular expression as described above, we obtain a se
 All that is left is to iterate through those matches, for each word retrieve the associated weight, make sure to multiply it by the number of occurrences and keep a running total of all of the sentiments included within the lexicon used.
 
 Some sentiments systems will act as a classifiers, whether it is machine learning or lexicon based, by returning "positive" or "negative" for a specific article. This system does not and keeps both the positive and negative scores obtained from an article, it provides more details useful to the statistical analysis.
+
+\subsection{Output Aggregating}
+
+The final step of the sentiment analysis system is to format the output such that it can be used for a statistical analysis. To do so, information about the corpus as well as articles computed sentiment is grouped daily and retrieved from the database. Official data from the french government\footnote{\url{https://www.data.gouv.fr/en/datasets/donnees-relatives-a-lepidemie-de-covid-19-en-france-vue-densemble/}} is appended to the sentiment data. Metrics used from the french government include: the number of confirmed COVID-19 cases, number of deaths and the number of first vaccine injections, corresponding to the data points "casConfirmes", "deces" and "nouvellesPremieresInjections" respectively in the summary data set.
 
 \section{Statistical Analysis}
 

@@ -4,38 +4,182 @@ This chapter introduces the results obtained from the steps detailed in the prev
 
 \section{Data Collection}
 
-From the original 369,569 articles downloaded as previously detailed (Chapter \ref{Collecting Data}), a total of 305,454 were loaded into the database after date and source filtering, removing a total of 17.34\% from the full corpus. Table \ref{tab: corpus size} includes key information with regards to  the size of the corpus. A second table, Table \ref{tab: articles overview} displays core statistics relating to sources, we find that on average sources have 1351.57 articles with a very high standard deviation (3220.96) which means that the sources article counts is heavily dispersed, as we can see looking at the minimum and maximum article count per source of 1 and 30,767 respectively, we can clearly see how that can be the case.
+From the original 369,569 articles downloaded using the approach detailed in Chapter \ref{Collecting Data}, a total of 305,454 were loaded into the database after date and source filtering was performed, removing a total of 17.34\% of articles from the full corpus. Table \ref{tab: corpus size} includes key information with regards to  the size of the corpus. The selected period makes for a total of 450 days, the average daily article count is then of 679 articles per day. Table \ref{tab:core stat source} and Table \ref{tab:stat source} include core statistics relating to sources, we find that on average individual sources have 1351.57 articles with a very high standard deviation of 3220.96 which means that the data is heavily dispersed, as we can see looking at the minimum and maximum article count per source, 1 and 30,767 respectively, we can clearly see how that can be the case. Furthermore, as previously explained (Chapter \ref{Statistical Methods}), the skewness shows the distribution of articles, 5.61 is considered a high value which signifies that the data is heavily skewed to the right, meaning that the right side of the distribution is longer. This is confirmed by the high kurtosis value of 40.31, showing a high amount of outliers in our data distribution, confirming the above analysis.
 
-\begin{table}[htb]
+Table \ref{tab:stat source} displays metrics about the thirty largest sources, it is found that while five sources have over 10,000 articles, it quickly drops with the last few sources showing article counts closer to 3,000 which is much closer to the observed mean.
+
+Looking at the largest source, Agence France Presse (AFP), its details have been previously discussed (Chapter \ref{chap:French Press}). The following sources are part of the largest french news organisations.
+
+Analysing the sources with the least amount of articles, it is found that 158 sources have less than 1000 articles and 104 have less than 200. Considering that the total number of selected sources is 226, the majority are found to contain a number of articles significantly lower than the mean as the counts are quite dispersed. Digging deeper, it is found that some sources appear under different names, for instance, Table \ref{tab:source repetition} shows an example of one source appearing under many different regional editions. This is occurs in many times within the corpus which explains how the sources are so spread out. 
+
+\begin{table}[]
 \centering
-\caption{Corpus Size Details}
+\caption{Corpus Size}
 \label{tab: corpus size}
 \begin{tabular}{lll}
-\hline
+\toprule
 Sources & Articles & Words \\ \hline
-226 & 305,454 & 167,800,491
+226 & 305,454 & 167,800,491 \\
+\bottomrule
 \end{tabular}
 \end{table}
 
-\begin{table}[htb]\label{tab: articles overview}
+\begin{table}[]
 \centering
+\caption{Articles Statistics Overview}
+\label{tab:core stat source}
 \begin{tabular}{@{}lllllll@{}}
-\caption{Articles Per Source Statistics Overview}
 \toprule
  & Mean & Std Dev & Skewness & Kurtosis & Minimum & Maximum \\ \midrule
-Articles per Source & 1351.57 & 3220.96 & 6.64 & 40.31 & 1 & 30,767 \\ \bottomrule
+Articles per Source & 1351.57 & 3220.96 & 5.61 & 40.31 & 1 & 30,767 \\ \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{table}[htb]
-\caption{Article Breakdown Per Source (first 30 sources)}
-\label{tab:article stat source}
+\begin{table}[]
+\caption{Example of Source Repetition}
+\label{tab:source repetition}
 \centering
-\csvautobooktabularcenter{evaluation/sources_stats.csv}
+\begin{tabular}{l}
+\toprule
+20 Minutes \\
+20 Minutes Bordeaux \\
+20 Minutes Lille \\
+20 Minutes Lyon \\
+20 Minutes Marseille \\
+20 Minutes Montpellier \\
+20 Minutes Nantes \\
+20 Minutes Nice \\
+20 Minutes Paris \\
+20 Minutes Rennes \\
+20 Minutes Strasbourg \\
+20 Minutes Toulouse \\
+\bottomrule
+\end{tabular}
 \end{table}
 
-\section{Data Analysis}
+\begin{table}[]
+\caption{Article Breakdown Per Source (first 30 sources)}
+\label{tab:stat source}
+\centering
+\csvautotabularcenter{evaluation/sources_stats.txt}
+\end{table}
 
 \section{Sentiment Analysis}
+
+\subsection{Polarity Analysis}
+
+Looking at the scores for polarity on the corpus as shown in Table \ref{tab:dict stats}, we find that even though the means and standard deviations for the three dictionaries vary a lot, that is simply because they use a specific weighting system. Looking a the ratio of the mean and the standard deviation we can observe than all three dictionaries are close to 0.8 which means we can expect very similar results by using any of these three dictionaries. The following results will focus on the output of FEEL (Chapter \ref{chap: feel}) as it also includes sentiment for a set of emotions such as fear, joy and more. An overview of the sentiment scores can be found in Table \ref{tab:feel stats}, given that FEEL counts the number of matched terms for each category, scores have been converted to percentages of the text such as to make these numbers easier to understand. Overall, a standard deviation slightly higher than the mean is found on all of the measured sentiments, showing that the articles sentiments are fairly spread out.
+
+\begin{table}[]
+\caption{Sentiment Dictionaries Comparison}
+\label{tab:dict stats}
+\centering
+\csvautotabularcenter{evaluation/sentiments_stat_overview.csv}
+\end{table}
+
+\begin{table}[]
+\caption{FEEL Sentiment Scores Overview}
+\label{tab:feel stats}
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+         & Mean    & Std Dev & Skewness & Kurtosis \\ \midrule
+Positive & 22.98\% & 3.36\%  & -0.1679  & 2.5496   \\
+Negative & 6.18\%  & 2.18\%  & 0.5033   & 1.2978   \\
+Joy      & 1.12\%  & 0.75\%  & 1.4807   & 5.3228   \\
+Fear     & 4.63\%  & 1.84\%  & 0.6326   & 1.6419   \\
+Sadness  & 3.81\%  & 1.72\%  & 0.9220   & 2.6318   \\
+Anger    & 2.43\%  & 1.32\%  & 1.0955   & 3.3366   \\
+Surprise & 2.26\%  & 1.14\%  & 1.3146   & 9.1619   \\
+Disgust  & 1.81\%  & 1.12\%  & 1.2009   & 3.6075   \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Virus Mentions}
+
+The virus dictionary is the largest of all three so it is no surprise that the average percentage of a word is of 1.39\%, the standard deviation is of 3.18\% which shows that a select set of words represent most of the mentions. This is confirmed in Table \ref{tab:virus freqs} which shows the fifteen most mentioned terms over the corpus, clearly the first seven terms make up most of the mentions. In total, words in this dictionary have been found 2,250,684 times in the corpus which makes for a total of 1.34\% of all words within the dictionary.
+
+\begin{table}[]
+\caption{Virus Dictionary Analysis}
+\label{tab:virus freqs}
+\centering
+\begin{tabular}{@{}cc@{}}
+\toprule
+Word      & Proportion \\ \midrule
+covid-19      & 19.45\% \\
+coronavirus   & 10.92\% \\
+pandémie      & 9.01\%  \\
+confinement   & 8.43\%  \\
+virus         & 7.98\%  \\
+épidémie      & 7.96\%  \\
+masque        & 6.62\%  \\
+contamination & 2.68\%  \\
+réanimation   & 2.42\%  \\
+restriction   & 1.94\%  \\
+dépistage     & 1.59\%  \\
+infection     & 1.57\%  \\
+déconfinement & 1.53\%  \\
+symptôme      & 1.49\%  \\
+contaminer    & 1.39\%  \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Vaccine Mentions}
+
+The vaccine dictionary has matched a total of 510,088 words in the corpus, in percentages this makes 0.30\% of the corpus. Within the dictionary, the mean rate of mentions is of 3.70\% and the standard deviation of 6.88\% hence the data is quite spread out. Once again, as shown in Table \ref{tab:vaccine freqs}, the first four words make up for 67\% of the entire dictionary mentions.
+
+\begin{table}[]
+\caption{Vaccine Dictionary Analysis}
+\label{tab:vaccine freqs}
+\centering
+\begin{tabular}{@{}cc@{}}
+\toprule
+Word      & Proportion \\ \midrule
+vaccin      & 33.26\% \\
+vaccination & 15.38\% \\
+dose        & 10.10\% \\
+vacciner    & 8.33\%  \\
+pfizer      & 4.54\%  \\
+astrazeneca & 4.19\%  \\
+injection   & 3.11\%  \\
+biontech    & 2.84\%  \\
+anticorps   & 2.75\%  \\
+moderna     & 2.41\%  \\
+vaccinal    & 2.13\%  \\
+immunité    & 2.13\%  \\
+sanofi      & 1.77\%  \\
+administrer & 1.67\%  \\
+arn         & 1.05\%  \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Death Mentions}
+
+The death dictionary shows similar metrics to the vaccine dictionary. Its words were found a total of 527,011 times in the corpus, making for 0.31\% of the total corpus. The mean rate of mentions within the dictionary is of 1.56\% and the standard deviation of 4.52\%, once again showing a high value. Similarly, the rate of mentions is quite disproportionate, as shown in Table \ref{tab:death freqs}, the first four words make up for 73.77\% of the entire dictionary mentions.
+
+\begin{table}[]
+\caption{Death Dictionary Analysis}
+\label{tab:death freqs}
+\centering
+\begin{tabular}{@{}cc@{}}
+\toprule
+Word      & Proportion \\ \midrule
+hôpital     & 22.21\% \\
+mort        & 18.87\% \\
+décès       & 17.32\% \\
+maladie     & 15.37\% \\
+victime     & 4.43\%  \\
+décéder     & 3.87\%  \\
+mourir      & 3.30\%  \\
+tuer        & 2.25\%  \\
+disparaître & 1.80\%  \\
+mortel      & 0.95\%  \\
+tombe       & 0.82\%  \\
+disparition & 0.74\%  \\
+cimetière   & 0.58\%  \\
+exécution   & 0.56\%  \\
+éteindre    & 0.55\%  \\ \bottomrule
+\end{tabular}
+\end{table}
 
 \section{Statistical Analysis}
