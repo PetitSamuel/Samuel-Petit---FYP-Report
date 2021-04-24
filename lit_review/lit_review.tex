@@ -8,7 +8,7 @@ TODO
 
 \subsection{French Press}\label{chap:French Press}
 
-TODO: possibly include some history of french press, AFP and more
+TODO: possibly include some history of French press, AFP and more
 % Find what the role of the press is, should be specifically in the context of important, hurtful events
 %How the people see the covid 19 pandemic
 
@@ -26,22 +26,32 @@ Sentiment Analysis (or opinion mining), is "the task of finding the opinions of 
 
 In fact, sentiment analysis has been used in a wide range of topics, including political analyses of social and news media \citep{ahmad2011new}, stock market behaviors \citep{rao2012analyzing,li2014news}, customer sentiment \citep{cambria2013new,mouthami2013sentiment}, fake news detection \citep{bhutani2019fake} and countless more applications.
 
-Languages are full of ambiguity and in particular the french language as some words can have drastically different meanings even though they are written the same, or adding an accent from a large variety of options can drastically change a words meaning. On top of this, it was found that a select set of words make up the majority of text, in fact, using a frequency-rank, it was found that the first 100 words make up for about 50\% of all of the words in a text cluster \citep{ahmad2007being}, this observation means that the interpretation of these highly frequent words is key to extracting sentiment proxies from text. While short text such as tweets \citep{chandrasekaran2020topics} or customer reviews can include a single sentiment or topic. It is not always the case and as the length of text grows more and more conflicting opinions are likely found. A simple example of this can be found on a customer review for a product: "I liked using the product, however I wish it didn't break after a day" where clearly both a positive and negative sentiment can be extracted from this review. This shows that there are multiple ways to perform sentiment analysis on text. Document-level computes the overall sentiment of a piece of text such as a tweet or a review, on the other hand, a sentence-level analysis approach can also be taken where a distinction is made between factual sentences (objective phrases) and subjective sentences which mostly contain opinions (subjective phrases) \citep{wilson2009recognizing}. A sentence-level approach is often used for tasks such as text summarizing, on the other hand, a document-level approach is often used for reviews or social media posts. 
+Languages are full of ambiguity and in particular the French language as some words can have drastically different meanings even though they are written the same, or adding an accent from a large variety of options can drastically change a words meaning. On top of this, it was found that a select set of words make up the majority of text, in fact, using a frequency-rank, it was found that the first 100 words make up for about 50\% of all of the words in a text cluster \citep{ahmad2007being}, this observation means that the interpretation of these highly frequent words is key to extracting sentiment proxies from text. While short text such as tweets \citep{chandrasekaran2020topics} or customer reviews can include a single sentiment or topic. It is not always the case and as the length of text grows more and more conflicting opinions are likely found. A simple example of this can be found on a customer review for a product: "I liked using the product, however I wish it didn't break after a day" where clearly both a positive and negative sentiment can be extracted from this review. This shows that there are multiple ways to perform sentiment analysis on text. Document-level computes the overall sentiment of a piece of text such as a tweet or a review, on the other hand, a sentence-level analysis approach can also be taken where a distinction is made between factual sentences (objective phrases) and subjective sentences which mostly contain opinions (subjective phrases) \citep{wilson2009recognizing}. A sentence-level approach is often used for tasks such as text summarizing, on the other hand, a document-level approach is often used for reviews or social media posts. 
 
-Thankfully, some NLP techniques have now been standardised to help with these issues. One of the most important ones being the use of stemming or lemmatising. Both of these techniques transform words into a more basic version of that word, 
+Thankfully, some NLP techniques have now been standardised to help with these issues. One of the most important ones being the use of stemming or lemmatising.
 
-TODO: detail sections on lexicon / ml, lemmatization vs stemming and more (note: may be worth mentioning regexp)
+\subsection{Stemming and Lemmatising}
+\label{lemmatization}\label{stemming}
 
-\subsection{TODO}
+Both of these techniques at their core attempt to do the same result: to simplify a word into a more basic form, the difference lies in how that is performed. Stemming trims a word into its word stem, on the other hand, lemmatising is more complex and transforms a word into its its dictionary form. Table \ref{tab:stem and lemma} shows an example of both techniques. The most popular stemming approach is the five-step Porter Stemmer \citep{porter1980algorithm}. This algorithm however does not apply to languages other than English. With regards to lemmatising, rule-based taggers are very commonly found, these probabilistic models have obtained high accuracy and are very commonly used \citep{brill1992simple}. This project makes use of TreeTagger, a multilingual tagger implemented using decision trees \citep{schmid2013probabilistic}. Another tool, SpaCy\footnote{\url{https://spacy.io/}}, an open source multilingual package which includes a lemmatizer was also used. After some comparison, it was found that the SpaCy implementation resulted in a higher rate of word matching so it was ultimately used to compute the results throughout this study.
 
-TODO: lemmatization stemming, ml / lexicons. SpaCy \& treetagger lemmatizer. Etc
-%\subsection{Lemmatization}
-\label{lemmatization}
+While stemming is much easier to apply, much more efficient to compute and does not require context, it can miss valuable information, especially when applied to the French language which contains a very high amount of irregular verbs or adjectives. On the other hand, lemmatising is much harder to apply as it requires context of the word in question within the sentence. However it is also much more representative of the meaning of each word. 
 
-%compare treetagger and SpaCy -- show mean scores.
-% look into ML vs Lexicon, stemming vs lemmas
-% look into language issue English vs others
-% french dictionaries
+\begin{table}[htb]
+\caption{Example of Stemming an Lemmatising}
+\label{tab:stem and lemma}
+\centering
+\begin{tabular}{@{}|ccc|@{}}
+\toprule
+\textbf{Input} & \textbf{Stem} & \textbf{Lemma} \\ \midrule
+Livre (to deliver) & livr & livrer \\
+Livre (a book) & livr & livre \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Computing Sentiment}
+
+There are two main approaches to performing sentiment analysis, Lexicon based and Machine Learning (ML) based.
 
 \section{French Lexica}\label{French Lexicons}
 
