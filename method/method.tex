@@ -1,13 +1,14 @@
 \chapter{Method}\label{Method}
 
-This section will go through an overview of the design choices that were made throughout this project on various levels in order to ultimately achieve the previously laid out research objectives (Chapter \ref{Introduction}). These design choices can be grouped into three different categories: Data Gathering, Sentiment Analysis and Statistical Analysis. Each of which will be explained in detail in the paragraphs below. An overview of the entire system can be found in Figure \ref{system figure}.
+This section will go through an overview of the design choices that were made throughout this project on various levels in order to ultimately achieve the previously laid out research objectives (Chapter \ref{Introduction}). These design choices can be grouped into three different categories: Data Gathering, Sentiment Analysis and Statistical Analysis. Each of which will be explained in detail in the paragraphs below. The system that was built as part of this study includes pieces built specifically for this project as well as a number of existing technologies. An overview of the entire system and those technologies can be found in Figure \ref{system figure}, each of these pieces are further explained in the sections below. The system was built using the Python\footnote{\url{https://www.python.org/}} programming language and the corpus was loaded into a MySQL database.
 
 
 \begin{figure}[h!]
       \centering
-      \includegraphics[scale=0.23]{method/system.png}
+      \includegraphics[scale=0.23]{method/system_1.png}
       \caption{System Overview}
       \label{system figure}
+      \emph{* indicates a module that was built as part of this thesis, the remaining modules integrate the specified technologies in the system}.
 \end{figure}
 
 \section{Data Gathering}
@@ -33,7 +34,7 @@ Final details to ensure relevancy include making sure that the publication langu
 
 \subsubsection{Quality Articles}
 
-A large amount of articles are written continuously on many different platforms such as social media, news platforms or web blogs for example. This study will focus on french news articles as they play a major role in distributing information to the general public. The Alliance pour les chiffres de la presse et des médias (ACPM)\footnote{\url{https://www.acpm.fr/Les-chiffres/Observatoire-2020-de-l-ACPM-Syntheses-2019}} is a non-profit organisation which verifies the distribution of french newspapers. The ACPM recorded an average of 9 million physical articles diffused and 60 million online visits daily in their 2020 review. To put these numbers into perspective, the Institut national de la statistique et des études économiques (INSEE)\footnote{\url{https://www.insee.fr/fr/statistiques/1892117?sommaire=1912926}}, the national statistics bureau of France, recorded a total population of 67 million in 2020. Studying these articles is thus particularly interesting given the large fraction of the population who are reading them. It is also worth noting that articles published by reputable sources are written by professionals, fact checked and verified on multiple levels within a news organisation before getting published. By targeting reputable french news sources, it is then expected to obtain a corpus containing high-quality, professionally written articles. It is important to make sure that any selected source is of sufficient quality as outlined above. Because of this, online blogs and sites have not been included in the corpus as they do not meet the quality threshold. These sources have been found to heavily reference themselves and rely on other news sources \cite{adamic2005political}. To further ensure quality, the sources of this corpus have all made a licensing agreement with LexisNexis News \& Business.
+A large amount of articles are written continuously on many different platforms such as social media, news platforms or web blogs for example. This study will focus on french news articles as they play a major role in distributing information to the general public. The \emph{Alliance pour les chiffres de la presse et des médias} (ACPM)\footnote{\url{https://www.acpm.fr/Les-chiffres/Observatoire-2020-de-l-ACPM-Syntheses-2019}} is a non-profit organisation which verifies the distribution of french newspapers. The ACPM recorded an average of 9 million physical articles diffused and 60 million online visits daily in their 2020 review. To put these numbers into perspective, the \emph{Institut national de la statistique et des études économiques} (INSEE)\footnote{\url{https://www.insee.fr/fr/statistiques/1892117?sommaire=1912926}}, the national statistics bureau of France, recorded a total population of 67 million in 2020. Analysing these articles is thus particularly interesting given the large fraction of the population who are reading them. It is also worth noting that articles published by reputable sources are written by professionals, fact checked and verified on multiple levels within a news organisation before getting published. By targeting reputable french news sources, it is then expected to obtain a corpus containing high-quality, professionally written articles. It is important to make sure that any selected source is of sufficient quality as outlined above. Because of this, online blogs and sites have not been included in the corpus as they do not meet the quality threshold. These sources have been found to heavily reference themselves and rely on other news sources \cite{adamic2005political}. To further ensure quality, the sources of this corpus have all made a licensing agreement with LexisNexis News \& Business.
 
 \subsubsection{Duplicates}
 
@@ -68,11 +69,11 @@ A small corpus was originally built by manually downloading articles matching th
 
 A scraper was built instead to automate the process of downloading those articles. A total of 369,569 articles listed on LexisNexis match the selected filters. As a service, LexisNexis enables downloading articles in batches of up to 500. It also enables options into the formatting of documents such link embedding, text formatting and more. As part of this system, the documents will be downloaded in rich text format (RTF), references will not be embedded as links such as to simplify the document parsing process, and articles will be saved as individual files which will be compressed as a ZIP file grouping 500 articles each. Note that all of these are options to be set by the scrapper on the options dialog before triggering a download.
 
-The technologies used to build the scraper include the Google Chrome browser, its associated "ChromeDriver" which enables triggering browser actions programmatically, the Python programming language and finally Selenium. Selenium is an open-source framework which makes performing automated browser actions easier.
+The technologies used to build the scraper include the Google Chrome browser, its associated "ChromeDriver" which enables triggering browser actions programmatically, the Python programming language and finally Selenium. Selenium is an open-source framework which makes performing automated browser actions easier. Figure \ref{fig:scraper pseudo code} shows a simplified set of actions performed by this scraper in pseudo code:
 
-Here is a simplified overview of the actions performed by this scraper in pseudo code:
-
-\begin{verbatim}
+\begin{figure}[h!]
+\centering
+\begin{BVerbatim}
 load_url()
 login()
 handle_pop_ups()
@@ -84,7 +85,10 @@ while !finished_downloading() {
     wait_for_download_finished()
     rename_and_index_downloaded_file()
 }
-\end{verbatim}
+\end{BVerbatim}
+\caption{Simplified Scraper Pseudocode}
+\label{fig:scraper pseudo code}
+\end{figure}
 
 There were a few issues specific to LexisNexis that needed solving before having a working, independent scraper. The first one was dealing with pop-ups. Opening LexisNexis from a scrapper with no cookies will open 0 to 3 different pop-ups promoting various events. To avoid scrapers these pop-ups include an automatically generated id in their HTML tag which made it harder to close automatically, their load time varied heavily as well. To solve this issue, a time period of 60 seconds on page load was put in place. During that time the system attempts to identify any pop-up HTML component and identify any buttons within the component. Such pop-ups only include close buttons which made the closing task easier.
 
@@ -116,7 +120,7 @@ The process of loading the data into a structured, relational database also requ
 
 \begin{figure}[h!]
       \centering
-      \includegraphics[scale=0.7]{method/Screenshot 2021-04-19 at 15.12.36.png}
+      \includegraphics[scale=0.7]{method/db_loader.png}
       \caption{Loading Articles Into a MySQL Database Pipeline}
       \label{database loader}
 \end{figure}
@@ -136,55 +140,123 @@ More information is extracted however the above fields represent the most import
 \section{Sentiment Analysis}
 
 The following subsection will cover the sentiment analysis part of this study. Including both the dictionaries used as well as the sentiment analysis pipelines. It addresses the following two research objectives: \emph{Create specialised dictionaries targeted to measure pandemic-related sentiments} as well as \emph{Perform sentiment analysis on the corpus to retrieve measures for various sentiments and term frequencies}.
-
+ 
 \subsection{Specialised Dictionaries}\label{Custom Dicts}
 
-In order to extract information specific to the COVID-19 pandemic, three specialist dictionaries were created. These dictionaries target the mentions of virus, vaccination and death. The process for creating these three dictionaries involved the corpus analysis tool AntConc\footnote{\url{https://www.laurenceanthony.net/software/antconc/}}. AntConc enables the analysis of word patterns within a corpus, a manual selection of terms from the analysis performed in AntConc yielded the three dictionaries.
+The vocabulary typically used in news articles is very general, by using a simple vocabulary, a news article ensures that its readers will understand the content provided. More generally, journals use a vocabulary that is familiar to its readers, with the exception of topic-specific sources covering subjects such as finance or sports for example, the vocabulary for the sources analysed in this study is quite general and easy to understand. As a newly emerging disease such as COVID-19 is discovered, news papers are found to adopt new specialised terminology. 
 
-Finally, it is worth noting that all three dictionaries consist of word lemmas, stop words have been removed and all of the terms were mapped to lowercase.
+General lexica such as FEEL (Chapter \ref{chap: feel}) may contain some specialised terms and associate it with a negative sentiment. This is not accurate as in the context of a pandemic, the mention of "virus" should not be seen as negative. To do so, the terms of the specialised dictionaries are removed from the lexica used.
+
+In order to extract information specific to the COVID-19 pandemic and measure its sentiments, three specialist dictionaries were created. These dictionaries target the mentions of virus, vaccination and death. The process for creating these three dictionaries involved the corpus analysis tool AntConc\footnote{\url{https://www.laurenceanthony.net/software/antconc/}}. AntConc enables the analysis of word patterns within a corpus, a manual selection of terms from the analysis performed in AntConc yielded the three dictionaries.
 
 \subsubsection{Virus}
 
 The Virus dictionary is the largest out of the three as it is also the most vast. The aim of this lexicon is to enable the measurement of virus-related words. It consists of words, expressions and objects that have been made popular or used in the context of the COVID-19 pandemic. The total lexicon includes seventy five words, Table \ref{tab:virus lexicon} shows twenty five entries. Care was put in reducing overlap between the three dictionaries, since this one was the largest, death and vaccination related terms have not been included in this lexicon.
 
+
 \begin{table}[htb]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\multicolumn{4}{c}{\textbf{Words}} \\ \midrule
+administration test & covid-19 & geste barrière & pandémie \\
+antibiotique & distanciation social & hospitalisation & pandémique \\
+aplatir courbe & déconfinement & immunisation & pathogène \\
+asymptomatique & déconfiner & immuniser & patient zéro \\
+auto-immun & déconfiné & immunité & pneumonie \\
+auto-isolement & déficit immunitaire & immunodéprimé & quarantaine \\
+bactérie & dépistage & infecter & restriction \\
+cas actif & dépister & infection & réanimation \\
+cas confirmer & désinfectant & insuffisance respiratoire & symptôme \\
+cas confirmé & désinfecter & isolement & taux de mortalité \\
+cas contact & epidémie & isoler & test antigénique \\
+charge viral & epidémiologie & laver main & transmission \\
+clinique de dépistage & faux négatif & lits soins intensifs & viral \\
+confinement & faux positif & masque & virologie \\
+confiné & fermeture frontière & mesure sanitaires & virus \\
+contamination & fièvre & mutation & vulnérable \\
+contaminer & foyer infection & muter & écraser courbe \\
+coronavirus & germe & nasal & épidémie \\
+couvre-feu & germes & \textit{oms} & \\
+\bottomrule
+\end{tabular}
 \caption{Virus Lexicon}
 \label{tab:virus lexicon}
-\centering
-\csvautobooktabularcenter{method/virus_lexicon.txt}
 \end{table}
 
 \subsubsection{Vaccine}
 
-Similarly, this lexicon aims to quantify the presence of vaccination-related words in articles. It consists of twenty eight words which are displayed in Table \ref{tab:vaccine lexicon}. The words included consist of a lexicon around vaccination as well as the names of the available COVID-19 vaccines or companies producing them.
+Similarly, this lexicon aims to quantify the presence of vaccination-related words in articles, consisting of words specific to the vaccination field as well as the names of COVID-19 vaccines or companies producing them. It contains  twenty eight words which are displayed in Table \ref{tab:vaccine lexicon}.
 
 \begin{table}[htb]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\multicolumn{2}{c}{\textbf{Words}} \\ \midrule
+adjuvant & injection \\
+administrer & \textit{janssen} \\
+anticorps & \textit{johnson\&johnson} \\
+antigène & \textit{moderna} \\
+antiviral & pathogène \\
+arn & \textit{pfizer} \\
+\textit{astrazeneca} & \textit{sanofi} \\
+\textit{biontech} & \textit{spoutnik v} \\
+\textit{curevac} & vaccin \\
+dose & vaccinal \\
+immunisation & vaccination \\
+immuniser & vacciner \\
+immunité & \textit{vaxzevria} \\
+immunoglobine & virologue \\
+\bottomrule
+\end{tabular}
 \caption{Vaccine Lexicon}
 \label{tab:vaccine lexicon}
-\centering
-\csvautobooktabularcenter{method/vaccine_lexicon.txt}
 \end{table}
 
 \subsubsection{Death}
 
-This final lexicon targets the mention of death within an article, it consists of sixty five words in total, twenty five of which are shown in Table \ref{tab:death lexicon}.
+This final lexicon targets the mention of death within an article, it consists of sixty five words in total which are shown in Table \ref{tab:death lexicon}.
 
 \begin{table}[htb]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\multicolumn{3}{c}{\textbf{Words}}               \\ \midrule
+agonie        & ensevelissement & mort           \\
+avoir quitter & enterrement     & mortel         \\
+cadavre       & enterrer        & mourant        \\
+caveau        & extinction      & mourir         \\
+cendres       & exécution       & obsèques       \\
+cercueil      & fatal           & pierre tombale \\
+cimetière     & fossoyeur       & périr          \\
+commémoration & funeste         & ressusciter    \\
+condoléances  & funèbre         & résurrection   \\
+crypte        & funérailles     & succomber      \\
+crématoire    & funéraire       & sépulture      \\
+crématorium   & génocide        & s’éteindre     \\
+cénotaphe     & homicide        & tombe          \\
+deuil         & hôpital         & tombeau        \\
+disparaître   & incinération    & trépas         \\
+disparition   & incinérer       & trépasser      \\
+décimer       & inerte          & tuer           \\
+décès         & inhumation      & victime        \\
+décéder       & lugubre         & âme            \\
+défunt        & maladie         & épitaphe       \\
+dépouille     & martyre         & éteindre       \\
+ensevelir     & meurtre         &                \\ \bottomrule
+\end{tabular}
 \caption{Death Lexicon}
 \label{tab:death lexicon}
-\centering
-\csvautobooktabularcenter{method/death_lexicon.txt}
 \end{table}
-
 \subsection{Sentiment Analysis Pipeline}
 
 Originally the text analysis software Rocksteady \cite{ahmad2014rocksteady} was used. Rocksteady is a lexicon based affect analysis system which was developed in Trinity College Dublin, Ireland. Once the scraper system (Chapter \ref{Collecting Data}) was put in place it became apparent that a more flexible system was required. Rocksteady requires the aggregation of articles into text files which comes with limitations, handling 369,569 articles in the form of text files is very expensive, whether it is to aggregate the corpus into a single or many files such that Rocksteady can read the corpus, reading all of that data on each load, computing all of the sentiments for the whole corpus at once which could run into memory issues as attempting to compute sentiment for a large amount of articles requires a flexible system such that sentiment can be computed through a data pipeline. In light of this, the articles were parsed, organised and loaded into a MySQL database as described in Chapter \ref{Collecting Data}. This system also enables extremely fast article retrieval as well as very useful data aggregation methods such as date grouping, source grouping and more within seconds. The following sections explain in detail how the system was implemented.
  
 \subsubsection{Lexicon Handling}
 
-The first part of performing lexicon based sentiment analysis on an article is to first load and process the various lexicons used. As part of this project three specialist dictionaries (Chapter \ref{Custom Dicts}) were used. FEEL, Diko as well as Polarimots (Chapter \ref{French Lexicons}) are three other lexicons which were used to measure polarity as well as other emotions where possible.
+The first part of performing lexicon based sentiment analysis on an article is to first load and process the various lexica used. As part of this project three specialist dictionaries (Chapter \ref{Custom Dicts}) were used. FEEL, Diko as well as Polarimots (Chapter \ref{French Lexicons}) are three other lexica which were used to measure polarity as well as other emotions where possible.
 
-With regards to the custom dictionaries, the process for loading each lexicon was to load the text file containing the lexicon. These lexicons are built in the form of one word per line. Splitting the resulting string using the new line character yields an array of all of the words within that lexicon. No weight was associated for each of the words so the count of occurrences within an article was used as the final score for each lexicon.
+With regards to the custom dictionaries, the process for loading each lexicon was to load the text file containing the lexicon. These lexica are built in the form of one word per line. Splitting the resulting string using the new line character yields an array of all of the words within that lexicon. No weight was associated for each of the words so the count of occurrences within an article was used as the final score for each lexicon.
 
 FEEL, Diko and Polarimots required more processing. Each of these lexicons had specific requirements when it came to putting it into practise as some included specific emotions and details. The following sections will explain how weights were applied for each of these dictionaries.
 
@@ -228,7 +300,7 @@ It was very important to save sentiment outputs to the database for two main rea
 
 \subsubsection{Text Cleaning}
 
-Articles are put through a series of steps that modify them in some way in order to apply sentiment analysis to it in the best of conditions. First, the articles are converted to lowercase, this step is not always necessary but the lexicons used all use lowercase words. The second step is to remove stop words and punctuation. The list of stop words used come from SpaCy's french language pipeline (Chapter \ref{lemmatization}). Finally, the remaining words are lemmatized also using SpaCy.
+Articles are put through a series of steps that modify them in some way in order to apply sentiment analysis to it in the best of conditions. First, the articles are converted to lowercase, this step is not always necessary but the lexica used all use lowercase words. The second step is to remove stop words and punctuation. The list of stop words used come from SpaCy's french language pipeline (Chapter \ref{lemmatization}). Finally, the remaining words are lemmatized also using SpaCy.
 
 \subsubsection{Computing Sentiment}
 
@@ -239,7 +311,7 @@ This final step receives a processed and cleaned text and outputs a set of senti
 
 The parentheses mark the group of the regular expression, the above expression would match the words "hello" and "world". Notice that they are wrapped in $\backslash$ followed by "b", this operator in regular expressions makes sure to only match entire words, hence making sure that a white space character is present before and after the word within the article. The final detail is that all of the lexicon's words are separated by a "|" operator which is the equivalent of the "OR" operation in a regular expression.
 
-Using a lexicon's compiled regular expression as described above, we obtain a set of paired values, including a subset of the lexicons words and its associated number of occurrences within the article.
+Using a lexicon's compiled regular expression as described above, we obtain a set of paired values, including a subset of the lexica words and its associated number of occurrences within the article.
 All that is left is to iterate through those matches, for each word retrieve the associated weight, make sure to multiply it by the number of occurrences and keep a running total of all of the sentiments included within the lexicon used.
 
 Some sentiments systems will act as a classifiers, whether it is machine learning or lexicon based, by returning "positive" or "negative" for a specific article. This system does not and keeps both the positive and negative scores obtained from an article, it provides more details useful to the statistical analysis.

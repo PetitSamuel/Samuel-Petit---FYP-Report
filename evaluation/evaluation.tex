@@ -1,4 +1,4 @@
-\chapter{Evaluation}\label{Evalutation}
+\chapter{Experiments and Results}\label{Evalutation}
 
 This chapter introduces the results obtained from the steps detailed in the previous chapter. It begins with a discussion and an overview of the corpus collected. Then, a section presenting sentiment analysis as well as the frequency of term mentions within the previously created specialist dictionaries (Chapter \ref{Data Collection}). Finally, a statistical analysis will be performed such as to identify any potential relationship between the presented variables. 
 
@@ -8,75 +8,122 @@ From the original 369,569 articles downloaded using the approach detailed in Cha
 
 Table \ref{tab:stat source} displays metrics about the thirty largest sources, it is found that while five sources have over 10,000 articles, it quickly drops with the last few sources showing article counts closer to 3,000 which is much closer to the observed mean.
 
-Looking at the largest source, Agence France Presse (AFP), its details have been previously discussed (Chapter \ref{chap:French Press}). The following sources are part of the largest french news organisations so it comes as no surprise that their article count is very high.
+Looking at the largest source, \emph{Agence France Presse} (AFP), its details have been previously discussed (Chapter \ref{chap:French Press}). The following sources are part of the largest french news organisations so it comes as no surprise that their article count is very high.
 
 Analysing the sources with the least amount of articles, it is found that 158 sources have less than 1000 articles and 104 have less than 200. Considering that the total number of selected sources is 226, the majority are found to contain a number of articles significantly lower than the mean as the counts are quite dispersed. Digging deeper, it is found that some sources appear under different names, for instance, Table \ref{tab:source repetition} shows an example of one source appearing under many different regional editions. This is occurs in many times within the corpus which explains how the sources are so spread out. 
 
 \begin{table}[]
 \centering
-\caption{Corpus Size}
-\label{tab: corpus size}
 \begin{tabular}{lll}
 \toprule
 Sources & Articles & Words \\ \hline
 226 & 305,454 & 167,800,491 \\
 \bottomrule
 \end{tabular}
+\caption{Corpus Size}
+\label{tab: corpus size}
 \end{table}
 
 \begin{table}[]
 \centering
-\caption{Article Statistics Overview}
-\label{tab:core stat source}
 \begin{tabular}{@{}lllllll@{}}
 \toprule
  & Mean & Std Dev & Skewness & Kurtosis & Minimum & Maximum \\ \midrule
-Articles per Source & 1351.57 & 3220.96 & 5.61 & 40.31 & 1 & 30,767 \\ \bottomrule
+Articles per Source & 1352 & 3221 & 6 & 40 & 1 & 30,767 \\ \bottomrule
 \end{tabular}
+\caption{Article Statistics Overview}
+\label{tab:core stat source}
 \end{table}
 
 \begin{table}[]
 \caption{Article Breakdown Per Source}
 \label{tab:stat source}
-\centering
-\csvautotabularcenter{evaluation/sources_stats.txt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}|crrr|@{}}
+\toprule
+\textbf{Source (First 30)} & \multicolumn{1}{c}{\textbf{Article Count}} & \multicolumn{1}{c}{\textbf{Word Count}} & \multicolumn{1}{c|}{\textbf{Mean Words}} \\ \midrule
+\emph{Agence France Presse} & 30767 & 14808082 & 481 \\
+\emph{Lefigaro.fr} & 21978 & 12111314 & 551 \\
+\emph{Le Dauphiné Libéré} & 17888 & 6334269 & 354 \\
+\emph{Le Progrès} & 11424 & 4345194 & 380 \\
+\emph{Challenges.fr} & 11139 & 6740282 & 605 \\
+\emph{La Depeche du Midi} & 9687 & 3750146 & 387 \\
+\emph{LesEchos.fr} & 8801 & 7457331 & 847 \\
+\emph{La Nouvelle République du Centre Ouest} & 7180 & 2504550 & 349 \\
+\emph{Le Télégramme} & 6853 & 2140967 & 312 \\
+\emph{La Montagne} & 5625 & 2042911 & 363 \\
+\emph{L'Est Républicain} & 5529 & 1960041 & 355 \\
+\emph{Les Echos} & 5212 & 3291085 & 631 \\
+\emph{Vosges Matin} & 4754 & 1722946 & 362 \\
+\emph{MIDI LIBRE} & 4719 & 1717583 & 364 \\
+\emph{Le Figaro} & 4712 & 3188302 & 677 \\
+\emph{Courrier de l'Ouest} & 4645 & 1573221 & 339 \\
+\emph{Le Figaro Économie} & 4556 & 3094663 & 679 \\
+\emph{Sciences et Avenir.fr} & 4539 & 3316758 & 731 \\
+\emph{L'Obs} & 3649 & 2798011 & 767 \\
+\emph{Nice Matin} & 3453 & 2744343 & 795 \\
+\emph{Le Courrier Picard} & 3356 & 1306574 & 389 \\
+\emph{Le Républicain Lorrain} & 3346 & 1222386 & 365 \\
+\emph{L'INDEPENDANT} & 3276 & 1100647 & 336 \\
+\emph{La Tribune} & 3049 & 2782505 & 913 \\
+\emph{LePoint.fr} & 2923 & 2909518 & 995 \\
+\emph{L'Est-eclair - Liberation Champagne} & 2914 & 1100477 & 378 \\
+\emph{Le Petit Journal} & 2860 & 830362 & 290 \\
+\emph{FRANCE 24 (French)} & 2806 & 1733556 & 618 \\
+\emph{Var Matin} & 2761 & 1996749 & 723 \\
+\emph{La Tribune.fr} & 2732 & 2405697 & 881 \\
+\emph{Le Berry Républicain} & 2718 & 1067047 & 393 \\ \bottomrule
+\end{tabular}%
+}
 \end{table}
 
+
 \begin{table}[]
-\caption{Source Repetition Example}
+\caption{Example of Source Repetition}
 \label{tab:source repetition}
 \centering
 \begin{tabular}{l}
 \toprule
-20 Minutes \\
-20 Minutes Bordeaux \\
-20 Minutes Lille \\
-20 Minutes Lyon \\
-20 Minutes Marseille \\
-20 Minutes Montpellier \\
-20 Minutes Nantes \\
-20 Minutes Nice \\
-20 Minutes Paris \\
-20 Minutes Rennes \\
-20 Minutes Strasbourg \\
-20 Minutes Toulouse \\
+\emph{20 Minutes} \\
+\emph{20 Minutes Bordeaux} \\
+\emph{20 Minutes Lille} \\
+\emph{20 Minutes Lyon} \\
+\emph{20 Minutes Marseille} \\
+\emph{20 Minutes Montpellier} \\
+\emph{20 Minutes Nantes} \\
+\emph{20 Minutes Nice} \\
+\emph{20 Minutes Paris} \\
+\emph{20 Minutes Rennes} \\
+\emph{20 Minutes Strasbourg} \\
+\emph{20 Minutes Toulouse} \\
 \bottomrule
-\end{tabular}
+\end{tabular} \\[0.2cm]
+Some sources appear under different names in the corpus, this causes for the data as observed in Table \ref{tab:core stat source} to be spread out.
 \end{table}
 
 \section{Sentiment Analysis}
 
 \subsection{Polarity Analysis}
 
-Looking at the scores for polarity on the corpus as shown in Table \ref{tab:dict stats}, even though the means and standard deviations for the three dictionaries vary a lot, that is simply because they use a specific weighting system. Looking a the ratio of the mean and the standard deviation we can observe than all three dictionaries are close to 0.8 which means we can expect very similar results by using any of these three dictionaries. The following results will focus on the output of FEEL (Chapter \ref{chap: feel}) as it also includes sentiment for a set of emotions such as fear, joy and more. An overview of the sentiment scores can be found in Table \ref{tab:feel stats}, given that FEEL counts the number of matched terms for each category, scores have been converted to percentages of the articles lengths such as to make these numbers easier to understand. 
+Looking at the scores for polarity on the corpus as shown in Table \ref{tab:dict stats}, means and standard deviations for the three dictionaries are found to be quite different, that is simply because they each use a specific weighting system. The following results will focus on the output of FEEL (Chapter \ref{chap: feel}) as it also includes sentiment for a set of emotions such as fear, joy and more and, like the specialised dictionaries, its weighing system simply count word occurrences. An overview of the sentiment scores can be found in Table \ref{tab:feel stats}, given that FEEL counts the number of matched terms for each category, scores have been converted to percentages of the articles lengths such as to make these numbers easier to understand. 
 
 TODO : use table 4.6 to provide an overview analysis of the results. 
 
 \begin{table}[]
-\caption{Sentiment Dictionaries Comparison}
-\label{tab:dict stats}
 \centering
-\csvautotabularcenter{evaluation/sentiments_stat_overview.csv}
+\begin{tabular}{@{}|c|llll|@{}}
+\toprule
+ & \multicolumn{1}{c}{\textbf{Mean}} & \multicolumn{1}{c}{\textbf{Std Dev}} & \multicolumn{1}{c}{\textbf{Min}} & \multicolumn{1}{c|}{\textbf{Max}} \\ \midrule
+\textbf{FEEL Positive} & 0.230 & 0.034 & 0.000 & 0.500 \\
+\textbf{FEEL Negative} & 0.062 & 0.022 & 0.000 & 0.309 \\
+\textbf{Polarimots Positive} & 0.014 & 0.007 & 0.000 & 0.102 \\
+\textbf{Polarimots Negative} & 0.004 & 0.004 & 0.000 & 0.105 \\
+\textbf{Diko Positive} & 0.395 & 0.068 & 0.000 & 2.498 \\
+\textbf{Diko Negative} & 0.144 & 0.084 & 0.000 & 1.647 \\ \bottomrule
+\end{tabular}
+\caption{Dictionaries Sentiment Comparison}
+Values were converted to be relative to the corpus size and absolute.
+\label{tab:dict stats}
 \end{table}
 
 \begin{table}[]
@@ -86,14 +133,14 @@ TODO : use table 4.6 to provide an overview analysis of the results.
 \begin{tabular}{@{}ccccc@{}}
 \toprule
          & Mean    & Std Dev & Skewness & Kurtosis \\ \midrule
-Positive & 22.98\% & 3.36\%  & -0.1679  & 2.5496   \\
-Negative & 6.18\%  & 2.18\%  & 0.5033   & 1.2978   \\
-Joy      & 1.12\%  & 0.75\%  & 1.4807   & 5.3228   \\
-Fear     & 4.63\%  & 1.84\%  & 0.6326   & 1.6419   \\
-Sadness  & 3.81\%  & 1.72\%  & 0.9220   & 2.6318   \\
-Anger    & 2.43\%  & 1.32\%  & 1.0955   & 3.3366   \\
-Surprise & 2.26\%  & 1.14\%  & 1.3146   & 9.1619   \\
-Disgust  & 1.81\%  & 1.12\%  & 1.2009   & 3.6075   \\ \bottomrule
+Positive & 22.98\% & 3.36\%  & -0.17  & 2.55   \\
+Negative & 6.18\%  & 2.18\%  & 0.50   & 1.30   \\
+Joy      & 1.12\%  & 0.75\%  & 1.48   & 5.32   \\
+Fear     & 4.63\%  & 1.84\%  & 0.63   & 1.64   \\
+Sadness  & 3.81\%  & 1.72\%  & 0.92   & 2.63   \\
+Anger    & 2.43\%  & 1.32\%  & 1.10   & 3.34   \\
+Surprise & 2.26\%  & 1.14\%  & 1.31   & 9.16   \\
+Disgust  & 1.81\%  & 1.12\%  & 1.20   & 3.61   \\ \bottomrule
 \end{tabular}
 \end{table}
 
@@ -188,40 +235,59 @@ exécution   & 0.56\%  \\
 
 \subsection{Correlation}
 
-Table \ref{tab:sentiment correlation} shows an overview of the correlations found between the computed sentiment variables as well as France's COVID-19 data provided by the french government (Chapter \ref{chap: output aggregating}). Bold values are statistically significant with P < 0.05.
+Tables \ref{tab: correlation 1/2} and  \ref{tab: correlation 2/2} show an overview of the correlations found between the computed sentiment variables as well as France's COVID-19 epidemiology data provided by the french government\footnote{\url{https://www.data.gouv.fr/en/datasets/donnees-relatives-a-lepidemie-de-covid-19-en-france-vue-densemble/}} (Chapter \ref{chap: output aggregating}). Bold values are statistically significant with P < 0.05.
 
 The number of daily articles is found to be positively correlated with the death count (0.50) as well as negativity, fear, sadness, anger and surprise, but is found to be negatively correlated with both virus and death sentiment. The number of new covid cases is found to be positively correlated with the number of daily death, vaccinations and new cases but is found to be negatively correlated with both virus and death sentiment, as well as joy, fear, surprise and disgust. Surprisingly, the number of daily deaths is not correlated with death sentiment. Instead it is found to be positively correlated with the vaccination rate and sentiment, as well as the average article length. It is also found to be negatively correlated with virus sentiment, joy and disgust. The daily vaccination rate is unsurprisingly found to be positively correlated (0.58) with vaccine sentiment, however, it is also negatively correlated with virus and death sentiment, as well as all of the FEEL recorded sentiments. It is surprising that positive terms are positively correlated with negative terms (0.62), in fact it is found that most of the FEEL recorded emotions are positively correlated. To finish, vaccine sentiment is positively correlated with death sentiment (0.63).
 
-\begin{landscape}
-\begin{table}[]
-\caption{Correlation Matrix of Sentiment and Government COVID-19 Metrics}
-\label{tab:sentiment correlation}
+\begin{table}[htb]
 \centering
-\resizebox{.82\paperheight}{!}{%
-\begin{tabular}{@{}|c|cccccccccccccccc|@{}}
-\toprule
-\textit{} & \textit{ArticleCount} & \textit{Cases(G)} & \textit{Death(G)} & \textit{Vaccine(G)} & \textit{Vaccine(S)} & \textit{Virus(S)} & \textit{Death(S)} & \textit{Length} & \textit{Pos} & \textit{Neg} & \textit{Joy} & \textit{Fear} & \textit{Sadness} & \textit{Anger} & \textit{Surprise} & \textit{Disgust} \\ \midrule
-\textit{ArticleCount} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Cases(G)} & 0.04 & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Death(G)} & \textbf{0.50} & \textbf{0.43} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Vaccine(G)} & 0.08 & \textbf{0.45} & \textbf{0.28} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Vaccine(S)} & 0.07 & \textbf{0.44} & \textbf{0.48} & \textbf{0.58} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Virus(S)} & \textbf{-0.21} & \textbf{-0.29} & \textbf{-0.15} & \textbf{-0.26} & \textbf{-0.19} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Death(S)} & \textbf{-0.13} & \textbf{-0.28} & 0.01 & \textbf{-0.22} & \textbf{-0.25} & \textbf{0.63} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Length} & \textbf{0.99} & -0.01 & \textbf{0.48} & 0.03 & 0.00 & \textbf{-0.17} & -0.08 & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Pos} & 0.08 & -0.01 & -0.02 & \textbf{-0.12} & \textbf{0.18} & \textbf{0.12} & -0.04 & 0.02 & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Neg} & \textbf{0.18} & -0.07 & 0.05 & \textbf{-0.19} & 0.01 & \textbf{0.20} & \textbf{0.10} & \textbf{0.17} & \textbf{0.62} & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Joy} & -0.05 & \textbf{-0.12} & \textbf{-0.15} & \textbf{-0.16} & 0.02 & \textbf{0.18} & 0.03 & -0.06 & \textbf{0.50} & 0.02 & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Fear} & \textbf{0.14} & \textbf{-0.11} & 0.02 & \textbf{-0.21} & -0.06 & \textbf{0.10} & \textbf{0.21} & \textbf{0.14} & \textbf{0.59} & \textbf{0.88} & 0.06 & 1.00 & \textbf{} & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Sadness} & \textbf{0.18} & \textbf{-0.14} & -0.02 & \textbf{-0.29} & \textbf{-0.15} & 0.06 & \textbf{0.13} & \textbf{0.18} & \textbf{0.64} & \textbf{0.71} & \textbf{0.18} & \textbf{0.76} & 1.00 & \textbf{} & \textbf{} & \textbf{} \\
-\textit{Anger} & \textbf{0.35} & 0.02 & 0.09 & \textbf{-0.16} & 0.05 & \textbf{-0.16} & \textbf{-0.10} & \textbf{0.33} & \textbf{0.56} & \textbf{0.72} & 0.06 & \textbf{0.69} & \textbf{0.64} & 1.00 & \textbf{} & \textbf{} \\
-\textit{Surprise} & \textbf{0.24} & \textbf{-0.12} & -0.08 & \textbf{-0.30} & \textbf{-0.16} & 0.01 & 0.04 & \textbf{0.22} & \textbf{0.61} & \textbf{0.55} & \textbf{0.26} & \textbf{0.51} & \textbf{0.69} & \textbf{0.71} & 1.00 & \textbf{} \\
-\textit{Disgust} & -0.06 & \textbf{-0.19} & \textbf{-0.10} & \textbf{-0.18} & -0.06 & \textbf{0.26} & \textbf{0.16} & -0.05 & \textbf{0.23} & \textbf{0.70} & 0.07 & \textbf{0.56} & \textbf{0.22} & \textbf{0.31} & \textbf{0.19} & 1.00 \\ \bottomrule
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|cccccccc|}
+\hline
+\multicolumn{1}{|l|}{} & ArticleCount & Cases & Death & Doses & VaccineDict & VirusDict & DeathDict & Length \\ \hline
+ArticleCount &  &  &  &  &  &  &  &  \\
+Cases &  &  &  &  &  &  &  &  \\
+Death & 0.50 & 0.43 &  &  &  &  &  &  \\
+Doses &  & 0.45 & 0.28 &  &  &  &  &  \\
+VaccineDict &  & 0.44 & 0.48 & 0.58 &  &  &  &  \\
+VirusDict & -0.21 & -0.29 & -0.15 & -0.26 & -0.19 &  &  &  \\
+DeathDict & -0.13 & -0.28 &  & -0.22 & -0.25 & 0.63 &  &  \\
+Length & 0.99 &  & 0.48 &  &  & -0.17 &  &  \\
+Pos &  &  &  & -0.12 & 0.18 & 0.12 &  &  \\
+Neg & 0.18 &  &  & -0.19 &  & 0.20 & 0.10 & 0.17 \\
+Joy &  & -0.12 & -0.15 & -0.16 &  & 0.18 &  &  \\
+Fear & 0.14 & -0.11 &  & -0.21 &  & 0.10 & 0.21 & 0.14 \\
+Sadness & 0.18 & -0.14 &  & -0.29 & -0.15 &  & 0.13 & 0.18 \\
+Anger & 0.35 &  &  & -0.16 &  & -0.16 & -0.10 & 0.33 \\
+Surprise & 0.24 & -0.12 &  & -0.30 & -0.16 &  &  & 0.22 \\
+Disgust &  & -0.19 & -0.10 & -0.18 &  & 0.26 & 0.16 &  \\ \hline
 \end{tabular}%
 }
-\emph{(G) Specifies a government provided data point, (S) represents a computed sentiment on the corpus. Bold values represent a statistical significance of p < 0.05.}
+\caption{Correlation Matrix of Sentiment and Government Epidemiology COVID-19 Metrics (Table 1/2)}
+\label{tab: correlation 1/2}
+Only statistically significant correlation with p < 0.05 are shown.
 \end{table}
-\end{landscape}
+
+
+\begin{table}[htb]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|cccccccc|}
+\hline
+\multicolumn{1}{|l|}{} & Pos & Neg & Joy & Fear & Sadness & Anger & Surprise & Disgust \\ \hline
+Neg & 0.62 &  &  &  &  &  &  &  \\
+Joy & 0.50 &  &  &  &  &  &  &  \\
+Fear & 0.59 & 0.88 &  &  &  &  &  &  \\
+Sadness & 0.64 & 0.71 & 0.18 & 0.76 &  &  &  &  \\
+Anger & 0.56 & 0.72 &  & 0.69 & 0.64 &  &  &  \\
+Surprise & 0.61 & 0.55 & 0.26 & 0.51 & 0.69 & 0.71 &  &  \\
+Disgust & 0.23 & 0.70 &  & 0.56 & 0.22 & 0.31 & 0.19 &  \\ \hline
+\end{tabular}%
+}
+\caption{Correlation Matrix of Sentiment and Government Epidemiology COVID-19 Metrics (Table 2/2)}
+Only statistically significant correlation with p < 0.05 are shown.
+\label{tab: correlation 2/2}
+\end{table}
 
 \subsection{TODO}
 

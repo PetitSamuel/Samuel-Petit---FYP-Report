@@ -15,15 +15,15 @@ vaccinal
 vaccination
 vacciner
 virologue
-dose
-astrazeneca
-pfizer
-moderna
-janssen
-vaxzevria
-johnson\&johnson
-curevac
-spoutnik v
-biontech
-sanofi
+dose\\
+\emph{astrazeneca}\\
+\emph{pfizer}\\
+\emph{moderna}\\
+\emph{janssen}\\
+\emph{vaxzevria} \\
+\emph{johnson\&johnson} \\
+\emph{curevac} \\
+\emph{spoutnik v} \\
+\emph{biontech} \\
+\emph{sanofi}
 arn
