@@ -143,18 +143,16 @@ The following subsection will cover the sentiment analysis part of this study. I
  
 \subsection{Specialised Dictionaries}\label{Custom Dicts}
 
-The vocabulary typically used in news articles is very general, by using a simple vocabulary, a news article ensures that its readers will understand the content provided. More generally, journals use a vocabulary that is familiar to its readers, with the exception of topic-specific sources covering subjects such as finance or sports for example, the vocabulary for the sources analysed in this study is quite general and easy to understand. As a newly emerging disease such as COVID-19 is discovered, news papers are found to adopt new specialised terminology. 
+The vocabulary typically used in news articles is very general, by using a simple vocabulary, a news article ensures that its readers will understand the content provided. More generally, journals use a vocabulary that is familiar to its readers, with the exception of topic-specific sources covering subjects such as finance or sports for example, the vocabulary for the sources analysed in this study is quite general and easy to understand. As a newly emerging disease such as COVID-19 is discovered, news papers are found to adopt new specialised terminology. General lexica such as FEEL (Chapter \ref{chap: feel}) may contain some specialised terms and associate it with a negative sentiment. This is not accurate as in the context of a pandemic, the mention of "virus" for example, should not be seen as negative. To do so, the terms of the specialised dictionaries are removed from the lexica used.
 
-General lexica such as FEEL (Chapter \ref{chap: feel}) may contain some specialised terms and associate it with a negative sentiment. This is not accurate as in the context of a pandemic, the mention of "virus" should not be seen as negative. To do so, the terms of the specialised dictionaries are removed from the lexica used.
-
-In order to extract information specific to the COVID-19 pandemic and measure its sentiments, three specialist dictionaries were created. These dictionaries target the mentions of virus, vaccination and death. The process for creating these three dictionaries involved the corpus analysis tool AntConc\footnote{\url{https://www.laurenceanthony.net/software/antconc/}}. AntConc enables the analysis of word patterns within a corpus, a manual selection of terms from the analysis performed in AntConc yielded the three dictionaries.
+In order to extract sentiment proxies specific to the COVID-19 pandemic, three specialist dictionaries were created. These dictionaries target the mentions of virus, vaccination and death. The process for creating these three dictionaries involved the corpus analysis tool AntConc\footnote{\url{https://www.laurenceanthony.net/software/antconc/}}. AntConc enables the analysis of word patterns within a corpus, a manual selection of terms from the analysis performed in AntConc yielded the three dictionaries.
 
 \subsubsection{Virus}
 
 The Virus dictionary is the largest out of the three as it is also the most vast. The aim of this lexicon is to enable the measurement of virus-related words. It consists of words, expressions and objects that have been made popular or used in the context of the COVID-19 pandemic. The total lexicon includes seventy five words, Table \ref{tab:virus lexicon} shows twenty five entries. Care was put in reducing overlap between the three dictionaries, since this one was the largest, death and vaccination related terms have not been included in this lexicon.
 
 
-\begin{table}[htb]
+\begin{table}[H]
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
@@ -188,7 +186,7 @@ couvre-feu & germes & \textit{oms} & \\
 
 Similarly, this lexicon aims to quantify the presence of vaccination-related words in articles, consisting of words specific to the vaccination field as well as the names of COVID-19 vaccines or companies producing them. It contains  twenty eight words which are displayed in Table \ref{tab:vaccine lexicon}.
 
-\begin{table}[htb]
+\begin{table}[H]
 \centering
 \begin{tabular}{@{}ll@{}}
 \toprule
@@ -217,7 +215,7 @@ immunoglobine & virologue \\
 
 This final lexicon targets the mention of death within an article, it consists of sixty five words in total which are shown in Table \ref{tab:death lexicon}.
 
-\begin{table}[htb]
+\begin{table}[H]
 \centering
 \begin{tabular}{@{}lll@{}}
 \toprule
@@ -320,8 +318,30 @@ Some sentiments systems will act as a classifiers, whether it is machine learnin
 
 The final step of the sentiment analysis system is to format the output such that it can be used for a statistical analysis. To do so, information about the corpus as well as its computed sentiment scores are grouped daily and retrieved from the database. Official data from the French government\footnote{\url{https://www.data.gouv.fr/en/datasets/donnees-relatives-a-lepidemie-de-covid-19-en-france-vue-densemble/}} is appended to the sentiment data. Metrics used from the French government include: the number of confirmed COVID-19 cases, number of deaths and the number of first vaccine injections, corresponding to the data points "casConfirmes", "deces" and "nouvellesPremieresInjections" respectively in the summary data set.
 
-\section{Statistical Analysis}
+\section{Statistical Analysis}\label{chap: stat analysis}
 
 This final subsection of this chapter will cover details of the last remaining research objective: \emph{Conduct statistical analysis on the results in order to identify and quantify potential relationships}.
 
-\subsection{TODO}
+\subsection{Vector AutoRegression}
+
+Using GNU Regression, Econometrics and Time-series Library (GRETL)
+
+GRETL is an open-source statistical
+package written in C providing both a GUI in GTK+ and has a commandline interface. 
+
+includes graphing, statistical possibilities
+--> performant and accurate
+
+Two types of variables:
+Endogenous variables have values that are determined by other variables in the system
+
+An exogenous variable is a variable that is not affected by other variables in the system.
+
+VAR in GRETL: 1 or more endogenous variable, 0 or more exdogenous
+
+
+before VAR: check variables are stationary before VAR (mean, variance etc) are standard over time. Test this by using a unit root test (ADF). Needs optimal lag length first!
+
+\subsubsection{Lag Selection}
+
+P-lags
