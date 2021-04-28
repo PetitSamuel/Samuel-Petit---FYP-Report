@@ -296,7 +296,7 @@ A VAR analysis was performed on various models as defined previously (Chapter \r
 
 Firstly, variables are tested using the Augmented Dickey–Fuller test (ADF). This test checks that no unit root is present in each variable, hence making sure that the variables are stationary. In the case that the ADF test fails, variables are tested using the Engle Granger cointegration test. This test always failed in this experiment however had the test succeeded a vector error correction model (VEC) would have be used instead of a vector autoregression (VAR) model. Variables which failed the ADF test and the cointegration test were first-order differentiated. The selection of an optimal lag length is then performed by the use of the Akaike Information Criterion (AIC), Bayesian Information Criterion (BIC) and the Hannan-Quinn criterion (HQC). Finally, the resulting variables were added to the VAR model incrementally such as to quantify the differences each variable makes to the obtained model.
 
-\subsubsection{Death Sentiment}
+\subsubsection{Death Sentiment Model}
 
 The variables for the number of deaths and cases failed both the ADF and cointegration tests. Their first-order difference has been used instead in this model as a result.
 
@@ -318,7 +318,7 @@ Table \ref{tab:model 1 lag} shows the results obtained for lag selection. We fin
 9 & \textbf{-15.17*} & -11.85 & -13.86 \\
 10 & -15.12 & -11.44 & -13.66 \\ \bottomrule
 \end{tabular}
-\caption{Model 1 Lag Selection}
+\caption{Death Sentiment Model Lag Selection}
 \label{tab:model 1 lag}
 \end{table}
 
@@ -331,7 +331,7 @@ It is worth noting that the Durbin-Watson values for this model are found to var
 As seen in Table \ref{tab:model 1 causality}, the observed P values are found to be extremely small thus always showing a bidirectional causality.
 
 \begin{longtable}[c]{@{}lrrrrrr@{}}
-\caption{Model 1 VAR Analysis}
+\caption{Death Sentiment Model VAR Analysis}
 \label{tab:model 1 var}\\
 \toprule
 \multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{1.1}} & \multicolumn{1}{c}{\textbf{1.2}} & \multicolumn{1}{c}{\textbf{1.3}} & \multicolumn{1}{c}{\textbf{1.4}} & \multicolumn{1}{c}{\textbf{1.5}} &
@@ -433,11 +433,11 @@ Death Sentiment $\rightarrow$ Fear & 8.9E-117 \\
 Fear $\rightarrow$ Death Sentiment & 7.68E-56 \\
 \textbf{Conclusion} & \multicolumn{1}{c}{bidirectional causality} \\ \bottomrule
 \end{tabular}
-\caption{Model 1 Granger Causality}
+\caption{Death Sentiment Model Granger Causality}
 \label{tab:model 1 causality}
 \end{table}
 
-\subsection{Virus Sentiment Model}
+\subsubsection{Virus Sentiment Model}
 
 With this second model, the ADF test failed for the variable representing the number of daily COVID-19 cases. The cointegration test also failed so that variable was converted to its first-order difference. Table \ref{tab:model 2 lag} displays the values obtained when performing lag selection. A lag of 9 was used for this model as suggested by both the AIC and HQC values. The BIC measure suggested a lag of 8 which is just one off from the selected lag of 9.
 
@@ -457,7 +457,7 @@ With this second model, the ADF test failed for the variable representing the nu
 9 & \textbf{9.41*} & 10.90 & \textbf{10.00*} \\
 10 & 9.44 & 11.09 & 10.09 \\ \bottomrule
 \end{tabular}
-\caption{Model 2 lag selection}
+\caption{Virus Sentiment Model Lag Selection}
 \label{tab:model 2 lag}
 \end{table}
 
@@ -469,7 +469,7 @@ On this model, the Durbin-Watson statistics is always found to be slightly over 
 Finally Table \ref{tab:model 2 causality} shows the results from the Granger causality tests. Once again, the observed P values are found to be extremely small and show again a bidirectional causality for all variables.
 
 \begin{longtable}[c]{@{}lrrrr@{}}
-\caption{Model 2 VAR Analysis}
+\caption{Virus Sentiment Model VAR Analysis}
 \label{tab:model 2 var}\\
 \toprule
 \multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{3.1}} & \multicolumn{1}{c}{\textbf{3.2}} & \multicolumn{1}{c}{\textbf{3.3}} & \multicolumn{1}{c}{\textbf{3.4}} \\* \midrule
@@ -548,11 +548,11 @@ Deaths $\rightarrow$ Virus Sentiment & 2.40E-217 \\
 \textbf{Conclusion} & \multicolumn{1}{r}{bidirectional causality} \\
 \bottomrule
 \end{tabular}
-\caption{Model 2 Granger Causality}
+\caption{Virus Sentiment Model Granger Causality}
 \label{tab:model 2 causality}
 \end{table}
 
-\subsection{Positive Model}
+\subsubsection{Positive Sentiment Model}
 
 This final model attempts to find relationships for a positive sentiment. The ADF tests failed on the vaccine sentiment variable as well as the doses variable which represents the amount of daily injected vaccine doses. The cointegration test also failed on these variables so as a results both variables were differentiated to their first-order. Table \ref{tab:model 3 lag} shows the results for lag selection. A lag length of 8 was selected for this model as it was selected best by two of the three indicators (AIC and HQC). The BIC metric suggested a lag of 6.
 
@@ -572,7 +572,7 @@ This final model attempts to find relationships for a positive sentiment. The AD
 9 & -7.11 & -5.68 & -6.55 \\
 10 & -7.14 & -5.55 & -6.51 \\ \bottomrule
 \end{tabular}
-\caption{Model 3 Lag Selection}
+\caption{Positive Sentiment Model Lag Selection}
 \label{tab:model 3 lag}
 \end{table}
  
@@ -583,7 +583,7 @@ For this table the Durbin-Watson statistic was consistently below 2, ranging bet
 A Granger causality test was also performed on this model and results are shown in Table \ref{tab:model 3 causality}. Like the other two models, the observed P-values for the Granger causality tests were found to be extremely small, thus showing bidirectional causality for all of the introduced variables of this model.
 
 \begin{longtable}[c]{@{}lrrrr@{}}
-\caption{Model 3 VAR Analysis}
+\caption{Positive Sentiment Model VAR Analysis}
 \label{tab:model 3 var}\\
 \toprule
 \multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{3.1}} & \multicolumn{1}{c}{\textbf{3.2}} & \multicolumn{1}{c}{\textbf{3.3}} & \multicolumn{1}{c}{\textbf{3.4}} \\* \midrule
@@ -658,7 +658,7 @@ Vaccination $\rightarrow$  Positive & 7.18E-37 \\
 \textbf{Conclusion} & bidirectional causality \\
 \bottomrule
 \end{tabular}
-\caption{Model 3 Granger Causality}
+\caption{Positive Sentiment Model Granger Causality}
 \label{tab:model 3 causality}
 \end{table}
 

@@ -79,7 +79,7 @@ As previously mentioned, there are few published French general dictionaries, th
 
 \subsection{FEEL}\label{chap: feel}
 
-The French Expanded Emotion Lexicon (FEEL) \citep{abdaoui2017feel}, is a lexicon that is built from the semi-automatic translation of the English NRC Word Emotion Association Lexicon \citep{mohammad2013crowdsourcing}. The study started by querying online translation tools to create a first version, then, "a human professional translator manually validated the automatically obtained entries and the associated emotions" \citep{abdaoui2017feel}. It was found that over 94\% of entries were correct in the first version. This study makes available the obtained dictionary and concludes that it is possible to obtain consistent, quality dictionaries with the use of online translation tools.
+The French Expanded Emotion Lexicon (FEEL) \citep{abdaoui2017feel}, is a lexicon that is built from the semi-automatic translation of the English NRC Word Emotion Association Lexicon \citep{mohammad2013crowdsourcing}. The study started by querying online translation tools to create a first version, then, "a human professional translator manually validated the automatically obtained entries and the associated emotions" \citep{abdaoui2017feel}. It was found that over 94\% of entries were correct in the first version. This study makes available the obtained dictionary and concludes that it is possible to obtain consistent, quality dictionaries with the use of online translation tools. One of the authors, Amine Abdaoui, was helpful and provided useful pointers on how best to apply the FEEL lexicon in this study through an email conversation.
 
 Word entries of the FEEL lexicon include a polarity of "positive" or negative as well as a set of emotions: joy, surprise, anger, disgust, sadness and fear. The associated weight for each of these emotions is either 0 or 1. More than 80\% of word entries include a single term, with the remaining mostly consisting of two terms and a minority consisting of three terms.
 
@@ -156,6 +156,10 @@ Mathematically, the kurtosis value is calculated as such:
 
 The P-Value is used in null hypothesis significance testing. Assuming a null hypothesis $H_{0}$, a hypothesis of no difference, and a second hypothesis $H_{1}$, representing the opposite of the null hypothesis. The P-Value is the probability of finding greater results when the null hypothesis $H_{0}$ is true. A level of significance is picked, typically one of 0.1, 0.05 or 0.01. A p-value below the threshold, then we can conclude that there is significant evidence to reject the null hypothesis $H_{0}$. This study uses a significance level of 5\% (p-value of 0.05) by default unless specified otherwise.
 
+\subsubsection{F Value}
+
+The F value is helpful in order to verify that the results observed are statistically significant. It is used along with the P-value and help determine if a newly added variable to a model improve its accuracy.
+
 \subsubsection{Correlation}
 
 This study makes use of the Pearson product-moment correlation coefficient. Correlation (r) quantifies linear relationship between two data sets. Its values ranges between -1 and 1. A correlation value of zero indicates no linear relationship between the two sets of data. A positive correlation indicates that both variables move in the same direction, it shows that when one becomes larger or smaller, so does the other. On the other hand, a negative correlation shows the opposite: both variables move in the opposite directions. 
@@ -175,14 +179,102 @@ The Z-Score (Z), also known as the standard score, is a value which shows a meas
 \end{equation}
 Where x is a value of the data set, $\bar{x}$ is the mean and $S$ is the standard deviation.
 
-\subsection{TODO: VAR / Causality Test}
-TODO
-%- main statistical measures
-%- correlation 
-%- statistical significance (look into durbin watson), hypothesis testing
-%- F-statistic with p-value
-%- unit root test
-%- R\^2
-%- granger causuality test
-%- VAR ?
-%- variance, z-score
+\subsection{VAR Analysis}\label{chap:var lit rv}
+
+This section introduces the Vector autoregression (VAR) statistical model as well as related statistic measures useful in order to test and evaluate VAR models.
+
+\subsubsection{Vector AutoRegression}
+
+VAR models were originally discovered and used for forecasting economic time series. Since its inception, VAR models have been used in various different applications successfully with some including sentiment analysis proxies \citep{georgoula2015using,zhao2015computational}. VAR works by using previous values of a time series in order to forecast future values.
+
+%Two types of variables:
+%Endogenous variables have values that are determined by other variables in the system
+%An exogenous variable is a variable that is not affected by other variables in the system.
+
+\subsubsection{Lag Selection}\label{chap:lag selection lr}
+
+There are three popular approaches to selecting a lag order. The Akaike Information Criterion (AIC), which finds the lag being optimal where the associated value is the lowest. The Bayesian Information Criterion (BIC) is the second approach which makes use of Bayes' theorem. It computes the posterior probability of each model such as to find the optimal model. The third criteria is the Hannan-Quinn criterion (HQC) which also has a very similar mathematical formula.
+
+Where L is the maximum value from the likelihood function, k is the number of estimated parameters, the three approaches can be computed as such:
+
+\begin{equation}
+    AIC = 2k - 2ln(L)
+\end{equation}
+\begin{equation}
+    BIC = ln(n)k - 2ln(L)
+\end{equation}
+\begin{equation}
+    HQC = 2kln(ln(n)) - 2ln(L)
+\end{equation}
+
+
+In terms of which criterion to trust, the AIC is commonly seen as the most accurate, with the exception of HQC for large sample sizes. There are different advantages linked to each approach in specific situations. Due to this our study shall use the AIC criterion when it is close or equal to HQC on a case by case basis.
+
+\subsubsection{\boldsymbol{R^2} and Adjusted \boldsymbol{R^2}}
+
+Both $R^2$ and the adjusted $R^2$ are statistic measures useful when evaluating a model. They show how accurately a model fits its data. The difference being that adjusted $R^2$ also depends on the number of independent variables in the model. Adding more variables to a model will increase both the $R^2$ and adjusted $R^2$ values if those variables improve the model, on the other had the measures will decrease when the added variables make the model predictions worse.
+
+\begin{equation}
+    R^2 = 1 - \frac{RSS}{TSS}
+\end{equation}
+Where RSS is the sum of square residuals and TSS is the total sum of squares:
+\begin{equation*}
+    RSS = \sum_{i} (y_{i} - f_{i})^2
+\end{equation*}
+\begin{equation*}
+    TSS = \sum_{i}(y_{i} - \bar{y})^{2}
+\end{equation*}
+With y being the observed values, $\bar{y}$ their mean, and f their predicted values.
+
+Finally, the formula for computing the adjusted $R^2$ value is:
+\begin{equation}
+    \bar{R}^{2} = 1 - \frac{(1 - R^2)(N - 1)}{N - p - 1}
+\end{equation}
+With p the number of predictors and N the total sample size.
+
+\subsubsection{Durbin Watson}
+
+The Durbin-Watson statistic is a measure named after its inventors after James Durbin and Geoffrey Watson. It is used to identify autocorrelation from a regression analysis. A rule of thumb is often used to measure autocorrelation using this statistic. A value in the range of 2 to 3 indicates no autocorrelation, a value below 2 indicate the presence of positive autocorrelation and finally a value over 3 implies the presence of negative autocorrelation. The formula to compute its value is found below where $e_{t}$ is the residual at index t and T is the number of observations.
+\begin{equation}
+    DurbinWatson = \frac{\sum_{t=2}^{T}(e_{t} - e_{t-1})^{2}}{\sum_{t=1}^{T}e_{t}^{2}}
+\end{equation}
+
+\subsubsection{Unit Root Testing}
+
+Two tests are useful in the context of this study in order to test variables for the presence of unit roots in time series. This test is applied in order to test the stationary of a variable. A variable is considered stationary when  its core statistical measures (such as the mean, variance to name a few) do not change over time. Making sure that variables are stationary enables accurate modeling.
+
+The first test performed is the Augmented Dickey–Fuller (ADF) test \citep{fuller2009introduction}. This test makes use of two hypotheses, the null hypothesis $H_0$ states the presence of a unit root in the time series sample. In our situation, the alternate hypothesis is that the variable tested is stationary.
+
+The ADF test is applied to the following model:
+\begin{equation}
+    \Delta y_{t} = \alpha + \beta t + \gamma y_{t-1} + \delta_{1}\Delta y_{t-1} + ... + \delta_{p-1}\Delta y_{t-p+1} + \epsilon_{t} 
+\end{equation}
+With $\alpha$ a constant, $\beta$ the coefficient for the time trend, p the lag order. Note that a lag order is required for this step, the method for selecting an optimal lag length was covered previously (Chapter \ref{chap:lag selection lr}).
+
+From these values a test statistic is computed which enables to make a conclusion on the analysis. Table \ref{tab:adf values} from \cite{fuller2009introduction} shows the critical values to compare the obtained test statistic against. Given that the test statistic is below the critical value for a selected sample size and confidence, then the null hypothesis can be rejected and the test verifies that the variables being tested is stationary.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\multicolumn{5}{c}{\textbf{Critical values for Dickey–Fuller t-distribution.}} \\ \midrule
+ & \multicolumn{2}{l}{Without   trend} & \multicolumn{2}{l}{With trend} \\
+Sample size & 1\% & 5\% & 1\% & 5\% \\ \midrule
+T = 25 & -3.75 & -3.00 & -4.38 & -3.60 \\
+T = 50 & -3.58 & -2.93 & -4.15 & -3.50 \\
+T = 100 & -3.51 & -2.89 & -4.04 & -3.45 \\
+T = 250 & -3.46 & -2.88 & -3.99 & -3.43 \\
+T = 500 & -3.44 & -2.87 & -3.98 & -3.42 \\
+T = $\infty$ & -3.43 & -2.86 & -3.96 & -3.41 \\ \bottomrule
+\end{tabular}
+\caption{Dickey–Fuller Test Critical Values \citep{fuller2009introduction}}
+\label{tab:adf values}
+\end{table}
+
+The second test is the Engle-Granger cointegration test \citep{engle1987co}. The residuals are tested for unit roots using the previously described ADF test. A second step checks that a linear combination of non stationary variables is stationary. It starts by estimating the linear regression using a technique such as ordinary least squares. A stationary test is then performed on this estimated model as well as 
+
+When the variables are cointegrated (there exists a correlation between the time series variables) then a vector error correction model (VECM) shall be used. In this study this has not been the case. On the other hand, when the cointegration test fails, then non-stationary variables can be differenciated as a last recourse in order to make the variable stationary.
+
+\subsubsection{Granger Causality Test}
+
+The Granger causality test is a statistical test with two hypotheses. It is useful in order to determine if one time series helps to forecast another. The test enables to state that a variable X Granger-causes another variable Y if it can be shown that X values provide statistically significant information about the future Y values. Usually the methods used in order to test this statement is a series of F-tests on lagged values.

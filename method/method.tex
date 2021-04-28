@@ -316,7 +316,7 @@ Some sentiments systems will act as a classifiers, whether it is machine learnin
 
 \subsection{Output Aggregating}\label{chap: output aggregating}
 
-The final step of the sentiment analysis system is to format the output such that it can be used for a statistical analysis. To do so, information about the corpus as well as its computed sentiment scores are grouped daily and retrieved from the database. Official data from the French government\footnote{\url{https://www.data.gouv.fr/en/datasets/donnees-relatives-a-lepidemie-de-covid-19-en-france-vue-densemble/}} is appended to the sentiment data. Metrics used from the French government include: the number of confirmed COVID-19 cases, number of deaths and the number of first vaccine injections, corresponding to the data points "casConfirmes", "deces" and "nouvellesPremieresInjections" respectively in the summary data set.
+The final step of the sentiment analysis system is to format the output such that it can be used for a statistical analysis. To do so, information about the corpus as well as its computed sentiment scores are grouped daily and retrieved from the database. Official data from the French government\footnote{\url{https://www.data.gouv.fr/en/datasets/donnees-relatives-a-lepidemie-de-covid-19-en-france-vue-densemble/}} is appended to the sentiment data. Metrics used from the French government include: the number of confirmed COVID-19 cases, number of deaths and the number of first vaccine injections, corresponding to the data points "casConfirmes", "deces" and "nouvellesPremieresInjections" respectively in the summary data set. This outputs a set of daily data points which includes various sentiments and official COVID-19 French metrics.
 
 \section{Statistical Analysis}\label{chap: stat analysis}
 
@@ -324,24 +324,105 @@ This final subsection of this chapter will cover details of the last remaining r
 
 \subsection{Vector AutoRegression}
 
-Using GNU Regression, Econometrics and Time-series Library (GRETL)
+The tool used for statistical analysis in this project is the GNU Regression, Econometrics and Time-series Library (GRETL). It is a powerful open-source tool for statistical analysis, it was picked for this project for its performance and accuracy.
 
-GRETL is an open-source statistical
-package written in C providing both a GUI in GTK+ and has a commandline interface. 
+The process for building each model involved a few steps. They will be detailed in the following sections.
 
-includes graphing, statistical possibilities
---> performant and accurate
+\subsubsection{Unit Root Testing}
 
-Two types of variables:
-Endogenous variables have values that are determined by other variables in the system
-
-An exogenous variable is a variable that is not affected by other variables in the system.
-
-VAR in GRETL: 1 or more endogenous variable, 0 or more exdogenous
-
-
-before VAR: check variables are stationary before VAR (mean, variance etc) are standard over time. Test this by using a unit root test (ADF). Needs optimal lag length first!
+Before any regression can be performed, it is is important to check all of the variables are stationary. This verifies that the variables statistical properties such as the mean, variance or autocorrelation are standard over time. This is done with the Augmented Dickey–Fuller (ADF) test. In the case that this test fails, the next step is to test for cointegration using Engle-Granger cointegration test. If this test succeeds, then a vector error correction model (VECM) shall be used instead of vector autoregression (VAR). If however the test fails then the variables failing are first-order differenciated.
 
 \subsubsection{Lag Selection}
 
-P-lags
+The following step is to perform lag selection, and in fact, a lag order is required to perform the above unit root testing. It is critical to select an appropriate lag length as it will affect heavily the obtained results. An incorrect lag value can result in over-fitting which in undesirable and causes an increase in the mean squared error. On the other hand, under-fitting is also undesirable and may often result in autocorrelation-errors.
+
+There are three popular approaches to optimal selection. Akaike Information Criterion (AIC), the Bayesian Information Criterion (BIC) and the Hannan–Quinn information criterion (HQC). All three criteria are further explained in Chapter \ref{chap:lag selection lr}. Due to the specific use cases of the three methods, lag selection will be approached on a model by model basis.
+
+\subsubsection{Model Building}
+
+The final step is to build VAR models. Models will be built incrementally by adding a single variable at a time.  On each iteration, a variable is added to the models and statistically significant coefficients are retrieved. The $R^2$ and adjusted $R^2$ values are computed which assesses the models performance, an increase in these values imply a higher model accuracy and on the opposite a smaller value show a decrease in the models accuracy. An F statistic and its P-value are also computed, in this situation, GRETL computes the Granger causality test as its F statistic. This test is also performed on the other direction for the newly added variable. This enables to discover whether one variable forecasts the other in both directions through the Granger causality test proxy. When no causality is found in the direction of dependent variables then that variable is dropped from the model. Finally, a Durbin-Watson test is also performed such as to detect autocorrelation. All of these statistics were further detailed in Chapter \ref{chap:var lit rv}.
+
+\subsection{Selected Models}
+
+Three models were built from the available variables both coming from the sentiment proxies of the built corpus as well as the French Government into a set of daily values (Chapter \ref{chap: output aggregating}). These three models were computed as they were found to be interesting, however this does not show the limits of what could be retrieved from the results of this sentiment analysis system.
+
+\subsubsection{Death Sentiment}
+
+This model aims to identify if there are causal relationships between the mention of death and COVID-19 metrics as well as other variables obtained from the French news media.
+
+The first iteration of VAR for this model starts by regressing the Death Sentiment on itself. The model for this first iteration is as follows:
+\begin{equation}
+    DeathDict_{t} = \alpha + \beta_{1}DeathDict_{t-1} + \beta_{2}DeathDict_{t-2} + ... + \beta_{n}DeathDict_{t-n} + \epsilon_{t}
+\end{equation}
+\begin{equation}
+    DeathDict_{t} = \alpha + \beta L_{n} DeathDict_{t} + \epsilon_{t}
+\end{equation}
+Where $\alpha$ is a constant, n represents the number of lags, $\beta$ the coefficient and finally $\epsilon$ is white noise. Note that both formulas are equivalent and we will be using the second, more concise formula for the remaining models.
+
+The following step will add the daily COVID-19 death count variable (named "Deaths") to the model, it is expected that mentions of death in news paper to be correlated with the daily death count. This model is represented by the following formula:
+\begin{equation}
+    DeathDict_{t} = \alpha + \beta L_{n} DeathDict_{t} + \gamma L_{n} Deaths_{t} + \epsilon_{t}
+\end{equation}
+
+The next variable introduced to the model will be the virus sentiment of articles ("VirusDict"), testing the idea that a higher mention rate of the death lexicon also results in a higher rate for the virus lexicon.
+\begin{equation}
+    DeathDict_{t} = \alpha + \beta L_{n} DeathDict_{t} + \gamma L_{n} Deaths_{t} + \delta L_{n} VirusDict_{t} + \epsilon_{t}
+\end{equation}
+
+Then the number of daily cases ("Cases") is added into the model in order to check whether death sentiment is related to the amount of growing cases.
+\begin{equation}
+    DeathDict_{t} = \alpha + \beta L_{n} DeathDict_{t} + \gamma L_{n} Deaths_{t} + \delta L_{n} VirusDict_{t} + \lambda L_{n} Cases_{t} + \epsilon_{t}
+\end{equation}
+
+The negative sentiment variable ("Neg") is added to the model as it could be expected that negativity and death sentiments are correlated within the French news media.
+\begin{equation}
+    DeathDict_{t} = \alpha + \beta L_{n} DeathDict_{t} + \gamma L_{n} Deaths_{t} + \delta L_{n} VirusDict_{t} + \lambda L_{n} Cases_{t} + \tau L_{n} Neg{t} + \epsilon_{t}
+\end{equation}
+
+Finally, the fear sentiment variable ("Fear") is added to the model.
+\begin{multline}
+    DeathDict_{t} = \alpha + \beta L_{n} DeathDict_{t} + \gamma L_{n} Deaths_{t} + \delta L_{n} VirusDict_{t} \\ + \lambda L_{n} Cases_{t} + \tau L_{n} Neg{t} + \phi L_{n} Fear_{t} + \epsilon_{t}
+\end{multline}
+\subsubsection{Positive Sentiment}
+
+The next model selects positive sentiment such as to identify the variables which increase the rate of positive words found in news articles. The first model used performs VAR on itself, the positive sentiment variable ("Pos").
+\begin{equation}
+    Pos_{t} = \alpha + \beta L_{n} Pos_{t} + \epsilon_{t}
+\end{equation}
+
+Then the variable for vaccination sentiment ("VaccineDict") is added to the model:
+\begin{equation}
+    Pos_{t} = \alpha + \beta L_{n} Pos_{t} + \gamma L_{n} VaccineDict_{t} + \epsilon_{t}
+\end{equation}
+
+Next, the computed value for joy ("Joy") is added to the model as positiveness and joy are expected to be positively correlated together.
+\begin{equation}
+    Pos_{t} = \alpha + \beta L_{n} Pos_{t} + \gamma L_{n} VaccineDict_{t} + \delta L_{n} Joy_{t} + \epsilon_{t}
+\end{equation}
+
+Finally, the rate of vaccination is added to the model ("VaccineDoses"). It is important to note that using the vaccination rate may see some varying results as vaccination in France only started on the 27-12-2020, thus leaving roughly 80\% of the date range used in this study with the vaccination rate of 0.
+\begin{equation}
+    Pos_{t} = \alpha + \beta L_{n} Pos_{t} + \gamma L_{n} VaccineDict_{t} + \delta L_{n} Joy_{t} + \lambda L_{n} VaccineDoses_{t} + \epsilon_{t}
+\end{equation}
+
+\subsubsection{Virus Sentiment}
+
+The final model presented in this study focuses on the mention of virus-related terms in the French news media ("VirusDict"). To do so the first VAR model built starts on itself.
+\begin{equation}
+    VirusDict_{t} = \alpha + \beta L_{n} VirusDict_{t} + \epsilon_{t}
+\end{equation}
+
+The next variable introduced to the model is the number of recorded daily COVID-19 cases in France ("Cases") as a higher mention of virus terms can be expected when there are large variations in the daily cases.
+\begin{equation}
+    VirusDict_{t} = \alpha + \beta L_{n} VirusDict_{t} + \gamma L_{n} Cases_{t} + \epsilon_{t}
+\end{equation}
+
+Then the negative sentiment variable ("Neg") is added to the model such as to test whether more mentions of negative words is correlated to a higher frequency of the virus lexicon within articles. 
+\begin{equation}
+    VirusDict_{t} = \alpha + \beta L_{n} VirusDict_{t} + \gamma L_{n} Cases_{t} + \delta L_{n} Neg_{t} + \epsilon_{t}
+\end{equation}
+
+The final variable introduced to this model is the number of daily recorded deaths in order to test if a higher death rate causes the news media to mention more virus terms.
+\begin{equation}
+    VirusDict_{t} = \alpha + \beta L_{n} VirusDict_{t} + \gamma L_{n} Cases_{t} + \delta L_{n} Neg_{t} + \lambda L_{n} Deaths_{t} + \epsilon_{t}
+\end{equation}
