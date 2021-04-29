@@ -31,13 +31,11 @@ Sources & Articles & Words \\ \hline
  & Mean & Std Dev & Skewness & Kurtosis & Minimum & Maximum \\ \midrule
 Articles per Source & 1352 & 3221 & 6 & 40 & 1 & 30,767 \\ \bottomrule
 \end{tabular}
-\caption{Article Statistics Overview}
+\caption{Article Statistics Overview Grouped by Source}
 \label{tab:core stat source}
 \end{table}
 
 \begin{table}[H]
-\caption{Example of Source Repetition}
-\label{tab:source repetition}
 \centering
 \begin{tabular}{l}
 \toprule
@@ -54,8 +52,10 @@ Articles per Source & 1352 & 3221 & 6 & 40 & 1 & 30,767 \\ \bottomrule
 \emph{20 Minutes Strasbourg} \\
 \emph{20 Minutes Toulouse} \\
 \bottomrule
-\end{tabular} \\[0.2cm]
-Some sources appear under different names in the corpus, this causes for the data as observed in Table \ref{tab:core stat source} to be spread out.
+\end{tabular}
+\caption{Example of Source Repetition}
+\label{tab:source repetition}
+Some sources appear under different names in the corpus, this causes for the data to spread out (as observed in Table \ref{tab:core stat source}).
 \end{table}
 
 \begin{table}[H]
@@ -110,9 +110,9 @@ We find that positivity and negativity occur the most often in the corpus (23\% 
 
 \begin{table}[H]
 \centering
-\begin{tabular}{@{}|c|llll|@{}}
+\begin{tabular}{@{}cllll@{}}
 \toprule
- & \multicolumn{1}{c}{\textbf{Mean}} & \multicolumn{1}{c}{\textbf{Std Dev}} & \multicolumn{1}{c}{\textbf{Min}} & \multicolumn{1}{c|}{\textbf{Max}} \\ \midrule
+ & \multicolumn{1}{c}{\textbf{Mean}} & \multicolumn{1}{c}{\textbf{Std Dev}} & \multicolumn{1}{c}{\textbf{Min}} & \multicolumn{1}{c}{\textbf{Max}} \\ \midrule
 \textbf{FEEL Positive} & 0.230 & 0.034 & 0.000 & 0.500 \\
 \textbf{FEEL Negative} & 0.062 & 0.022 & 0.000 & 0.309 \\
 \textbf{Polarimots Positive} & 0.014 & 0.007 & 0.000 & 0.102 \\
@@ -121,7 +121,7 @@ We find that positivity and negativity occur the most often in the corpus (23\% 
 \textbf{Diko Negative} & 0.144 & 0.084 & 0.000 & 1.647 \\ \bottomrule
 \end{tabular}
 \caption{Dictionaries Sentiment Comparison}
-Values were converted to be relative to the corpus size and absolute.\\Values represent individual articles with no grouping.
+Values were converted to be relative to the corpus size and absolute and represent all articles with no grouping. A minimum value of 0 indicates that for each dictionary at least one article matched no words.
 \label{tab:dict stats}
 \end{table}
 
@@ -140,9 +140,9 @@ Surprise & 2.26\%  & 1.14\%  & 1.31   & 9.16   \\
 Disgust  & 1.81\%  & 1.12\%  & 1.20   & 3.61   \\
 \bottomrule
 \end{tabular}
-\caption{FEEL Sentiment Overview}
+\caption{FEEL Sentiment Statistics Overview}
 \label{tab:feel stats}
-\emph{Values represent individual articles with no grouping.}
+\emph{Values represent all articles with no grouping.}
 \end{table}
 
 \subsection{Virus Mentions}
@@ -150,7 +150,7 @@ Disgust  & 1.81\%  & 1.12\%  & 1.20   & 3.61   \\
 The virus dictionary is the largest of all three so it is no surprise that within the dictionary, the mean rate of mentions per word is of 1.39\% and the standard deviation is of 3.18\%. The mean and standard deviation show that a select set of words represent most of the mentions. This is confirmed in Table \ref{tab:virus freqs} which shows the fifteen most mentioned terms over the corpus, clearly the first seven terms make up most of the mentions. In total, words of this dictionary have been found 2,250,684 times within the corpus which makes for a total of 1.34\% of all words within the dictionary.
 
 \begin{table}[H]
-\caption{Virus Dictionary Analysis}
+\caption{Virus Dictionary Frequency}
 \label{tab:virus freqs}
 \centering
 \begin{tabular}{@{}cc@{}}
@@ -179,7 +179,7 @@ contaminer    & 1.39\%  \\ \bottomrule
 The vaccine dictionary has matched a total of 510,088 words in the corpus, in percentages this makes 0.30\% of the corpus. Within the dictionary, the mean rate of mentions is of 3.70\% and the standard deviation of 6.88\% hence the data is quite spread out. Once again, as shown in Table \ref{tab:vaccine freqs}, the first four words make up for 67\% of the entire dictionary mentions.
 
 \begin{table}[H]
-\caption{Vaccine Dictionary Analysis}
+\caption{Vaccine Dictionary Frequency}
 \label{tab:vaccine freqs}
 \centering
 \begin{tabular}{@{}cc@{}}
@@ -208,7 +208,7 @@ arn         & 1.05\%  \\ \bottomrule
 The death dictionary shows similar metrics to the vaccine dictionary. Its words were found a total of 527,011 times in the corpus, making for 0.31\% of the total corpus. The mean rate of mentions within the dictionary is of 1.56\% and the standard deviation of 4.52\%, once again showing a high value. Similarly, the rate of mentions is quite disproportionate, as shown in Table \ref{tab:death freqs}, the first four words make up for 73.77\% of the entire dictionary mentions.
 
 \begin{table}[H]
-\caption{Death Dictionary Analysis}
+\caption{Death Dictionary Frequency}
 \label{tab:death freqs}
 \centering
 \begin{tabular}{@{}cc@{}}
@@ -320,6 +320,7 @@ Table \ref{tab:model 1 lag} shows the results obtained for lag selection. We fin
 \end{tabular}
 \caption{Death Sentiment Model Lag Selection}
 \label{tab:model 1 lag}
+Bold values with an * represent the suggested lag.
 \end{table}
 
 Finally, Table \ref{tab:model 1 var} displays the VAR results regressing each variable against Death Sentiment and Table \ref{tab:model 1 causality} performs a Granger causality test on all variables.
@@ -334,15 +335,15 @@ As seen in Table \ref{tab:model 1 causality}, the observed P values are found to
 \caption{Death Sentiment Model VAR Analysis}
 \label{tab:model 1 var}\\
 \toprule
-\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{1.1}} & \multicolumn{1}{c}{\textbf{1.2}} & \multicolumn{1}{c}{\textbf{1.3}} & \multicolumn{1}{c}{\textbf{1.4}} & \multicolumn{1}{c}{\textbf{1.5}} &
-\multicolumn{1}{c}{\textbf{1.6}} \\* \midrule
+\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{DeathDict}} & \multicolumn{1}{c}{\textbf{Deaths}} & \multicolumn{1}{c}{\textbf{VirusDict}} & \multicolumn{1}{c}{\textbf{Cases}} & \multicolumn{1}{c}{\textbf{Neg}} &
+\multicolumn{1}{c}{\textbf{Fear}} \\* \midrule
 \endfirsthead
 %
 \multicolumn{7}{c}%
 {{\bfseries Table \thetable\ continued from previous page}} \\
 \toprule
-\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{1.1}} & \multicolumn{1}{c}{\textbf{1.2}} & \multicolumn{1}{c}{\textbf{1.3}} & \multicolumn{1}{c}{\textbf{1.4}} & \multicolumn{1}{c}{\textbf{1.5}} &
-\multicolumn{1}{c}{\textbf{1.6}} \\* \midrule
+\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{DeathDict}} & \multicolumn{1}{c}{\textbf{Deaths}} & \multicolumn{1}{c}{\textbf{VirusDict}} & \multicolumn{1}{c}{\textbf{Cases}} & \multicolumn{1}{c}{\textbf{Neg}} &
+\multicolumn{1}{c}{\textbf{Fear}} \\* \midrule
 \endhead
 %
 \bottomrule
@@ -410,13 +411,13 @@ Adjusted $R^2$ & 0.717 & 0.767 & 0.803 & 0.803 & 0.807 & 0.811 \\
 P-value(F) & 8.10E-108 & 4.80E-117 & 8.40E-125 & 9.70E-119 & 1.20E-120 & 8.90E-117 \\
 Durbin-Watson & 1.854 & 1.958 & 1.972 & 1.998 & 1.922 & 1.883 \\* \bottomrule
 \end{longtable}
-\emph{Bold values represent statistically significant model coefficients}
+\emph{Bold values represent statistically significant model coefficients}\\
 
 \begin{table}[H]
 \centering
 \begin{tabular}{@{}cr@{}}
 \toprule
-\textbf{Causality} & \multicolumn{1}{c}{\textbf{P-Value(F)}} \\ \midrule
+\textbf{Granger Causality} & \multicolumn{1}{c}{\textbf{P-Value(F)}} \\ \midrule
 Death Sentiment $\rightarrow$ Deaths & 4.8E-117 \\
 Deaths $\rightarrow$ Death Sentiment & 1.4E-101 \\
 \textbf{Conclusion} & \multicolumn{1}{c}{bidirectional causality} \\
@@ -459,6 +460,7 @@ With this second model, the ADF test failed for the variable representing the nu
 \end{tabular}
 \caption{Virus Sentiment Model Lag Selection}
 \label{tab:model 2 lag}
+Bold values with an * represent the suggested lag.
 \end{table}
 
 
@@ -472,13 +474,13 @@ Finally Table \ref{tab:model 2 causality} shows the results from the Granger cau
 \caption{Virus Sentiment Model VAR Analysis}
 \label{tab:model 2 var}\\
 \toprule
-\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{3.1}} & \multicolumn{1}{c}{\textbf{3.2}} & \multicolumn{1}{c}{\textbf{3.3}} & \multicolumn{1}{c}{\textbf{3.4}} \\* \midrule
+\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{VirusDict}} & \multicolumn{1}{c}{\textbf{Cases}} & \multicolumn{1}{c}{\textbf{Neg}} & \multicolumn{1}{c}{\textbf{Deaths}} \\* \midrule
 \endfirsthead
 %
 \multicolumn{5}{c}%
 {{\bfseries Table \thetable\ continued from previous page}} \\
 \toprule
-\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{3.1}} & \multicolumn{1}{c}{\textbf{3.2}} & \multicolumn{1}{c}{\textbf{3.3}} & \multicolumn{1}{c}{\textbf{3.4}} \\* \midrule
+\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{VirusDict}} & \multicolumn{1}{c}{\textbf{Cases}} & \multicolumn{1}{c}{\textbf{Neg}} & \multicolumn{1}{c}{\textbf{Deaths}} \\* \midrule
 \endhead
 %
 \bottomrule
@@ -536,7 +538,7 @@ Durbin-Watson & 2.167 & 2.005 & 2.022 & 2.048 \\* \bottomrule
 \centering
 \begin{tabular}{@{}cl@{}}
 \toprule
-\textbf{Causality} & \multicolumn{1}{c}{\textbf{P-Value(F)}} \\ \midrule
+\textbf{Granger Causality} & \multicolumn{1}{c}{\textbf{P-Value(F)}} \\ \midrule
 Virus Sentiment $\rightarrow$ Cases & 4.80E-118 \\
 Cases $\rightarrow$ Virus Sentiment & 3.91E-42 \\
 \textbf{Conclusion} & \multicolumn{1}{r}{bidirectional causality} \\
@@ -573,6 +575,7 @@ This final model attempts to find relationships for a positive sentiment. The AD
 10 & -7.14 & -5.55 & -6.51 \\ \bottomrule
 \end{tabular}
 \caption{Positive Sentiment Model Lag Selection}
+Bold values with an * represent the suggested lag.
 \label{tab:model 3 lag}
 \end{table}
  
@@ -586,13 +589,13 @@ A Granger causality test was also performed on this model and results are shown 
 \caption{Positive Sentiment Model VAR Analysis}
 \label{tab:model 3 var}\\
 \toprule
-\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{3.1}} & \multicolumn{1}{c}{\textbf{3.2}} & \multicolumn{1}{c}{\textbf{3.3}} & \multicolumn{1}{c}{\textbf{3.4}} \\* \midrule
+\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{Pos}} & \multicolumn{1}{c}{\textbf{VaccineDict}} & \multicolumn{1}{c}{\textbf{Joy}} & \multicolumn{1}{c}{\textbf{VaccineDoses}} \\* \midrule
 \endfirsthead
 %
 \multicolumn{5}{c}%
 {{\bfseries Table \thetable\ continued from previous page}} \\
 \toprule
-\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{3.1}} & \multicolumn{1}{c}{\textbf{3.2}} & \multicolumn{1}{c}{\textbf{3.3}} & \multicolumn{1}{c}{\textbf{3.4}} \\* \midrule
+\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{Pos}} & \multicolumn{1}{c}{\textbf{VaccineDict}} & \multicolumn{1}{c}{\textbf{Joy}} & \multicolumn{1}{c}{\textbf{VaccineDoses}} \\* \midrule
 \endhead
 %
 \bottomrule
@@ -646,7 +649,7 @@ Durbin-Watson & 1.986 & 1.913 & 1.891 & 1.904 \\* \bottomrule
 \centering
 \begin{tabular}{@{}cr@{}}
 \toprule
-\textbf{Causality} & \multicolumn{1}{c}{\textbf{P-Value(F)}} \\ \midrule
+\textbf{Granger Causality} & \multicolumn{1}{c}{\textbf{P-Value(F)}} \\ \midrule
 Positive   $\rightarrow$ Vaccine Dict & 2.32E-27 \\
 Vaccine Dict $\rightarrow$  Positive & 1.17E-15 \\
 \textbf{Conclusion} & bidirectional causality \\

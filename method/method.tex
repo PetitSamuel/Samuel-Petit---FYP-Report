@@ -15,7 +15,7 @@ This section will go through an overview of the design choices that were made th
 
 The first part of this subsection addresses the process of identifying, gathering and organising data such as to create a quality corpus and to achieve the research objective: \emph{Gather a large corpus containing high quality French news articles relevant to COVID-19}.
 
-\subsection{Relevant Articles Of Quality}
+\subsection{Relevant Articles of Quality}
 
 This section provides answers to the following questions about creating this data set:
 \begin{enumerate}
@@ -121,7 +121,7 @@ The process of loading the data into a structured, relational database also requ
 \begin{figure}[h!]
       \centering
       \includegraphics[scale=0.7]{method/db_loader.png}
-      \caption{Loading Articles Into a MySQL Database Pipeline}
+      \caption{Loading Articles Into MySQL}
       \label{database loader}
 \end{figure}
 
@@ -156,7 +156,7 @@ The Virus dictionary is the largest out of the three as it is also the most vast
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
-\multicolumn{4}{c}{\textbf{Words}} \\ \midrule
+\multicolumn{4}{c}{\textbf{Virus Lexicon}} \\ \midrule
 administration test & covid-19 & geste barrière & pandémie \\
 antibiotique & distanciation social & hospitalisation & pandémique \\
 aplatir courbe & déconfinement & immunisation & pathogène \\
@@ -190,7 +190,7 @@ Similarly, this lexicon aims to quantify the presence of vaccination-related wor
 \centering
 \begin{tabular}{@{}ll@{}}
 \toprule
-\multicolumn{2}{c}{\textbf{Words}} \\ \midrule
+\multicolumn{2}{c}{\textbf{Vaccine Lexicon}} \\ \midrule
 adjuvant & injection \\
 administrer & \textit{janssen} \\
 anticorps & \textit{johnson\&johnson} \\
@@ -219,7 +219,7 @@ This final lexicon targets the mention of death within an article, it consists o
 \centering
 \begin{tabular}{@{}lll@{}}
 \toprule
-\multicolumn{3}{c}{\textbf{Words}}               \\ \midrule
+\multicolumn{3}{c}{\textbf{Death Lexicon}}    \\ \midrule
 agonie        & ensevelissement & mort           \\
 avoir quitter & enterrement     & mortel         \\
 cadavre       & enterrer        & mourant        \\

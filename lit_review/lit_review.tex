@@ -4,13 +4,34 @@
 
 \subsection{Role of the Media in a crisis}\label{Role of the Media in a crisis}
 
-TODO
+It is not an easy task to quantify how much the media impacts a society's perception on various topics, events and personalities especially given the large span of time it has been around for. However what is clear is that major events are dealt or handled with a goal to have it reported in certain ways by news outlets. When considering that world leaders constantly think about how certain decisions will be reported by news outlets, amongst other examples and situations, it is fair to state that the news media clearly affects how society works to this day. 
 
-\subsection{French Press}\label{chap:French Press}
+"Cultivation theory" is a term which was introduced by \cite{gerbner1976living}. It represents the idea that regular exposure to media, in the context of their study, television media, influences the viewers idea and perception of everyday life events. Through the analysis of answers from both light and heavy consumers of media they were able to quantify the difference in perspectives as seen in Figure \ref{fig:tv perception} which shows one of their experiments. While this figure illustrates the immediate difference in perceptions that heavy media consumption can cause, it also has been found to have long-term effect on an individuals behaviour. These changes are found to be slow and mostly indirect but sum up to significant changes in an entire population over a long period of time.
 
-TODO: possibly include some history of French press, AFP and more
-% Find what the role of the press is, should be specifically in the context of important, hurtful events
-%How the people see the covid 19 pandemic
+\begin{figure}[H]
+      \centering
+      \includegraphics[scale=0.65]{lit_review/tv_2.png}
+      \caption{Perception Difference of Light and Heavy TV Consumers}
+      \label{fig:tv perception}
+      \emph{Source: \cite{gerbner1976living}}
+\end{figure}
+
+In the context of a crisis of global scale such as the COVID-19 pandemic, the news media play a particularly important role as they diffuse information which may be critical to its readers survival. Studies have analysed how news agencies handled this situation and found conflicting news being published particularly at the start of the pandemic. Finding "large diﬀerences in content between the two most popular cable news shows in the US" \citep{bursztyn2020misinformation}, the study also found that areas where news agencies downplayed the impact of COVID-19 resulted in more cases and deaths. A different study analysed sentiment polarity for COVID-19 news coverage over Europe and found France to have a large number of positive news in comparison to Eastern European countries (Figure \ref{fig:eu mood}). This same study found France to have the highest rate of headlines being classified as negative through the use of a pre-trained multilingual BERT\footnote{\url{https://github.com/google-research/bert}} model. Finding a rate of 50\% of headlines being classified as negative \citep{robertson2021covid}.
+Finally, an analysis on US  news discovered differences in news polarity and politicization of news depending on the format, stating that "newspaper coverage is highly politicized, network news coverage somewhat less so, and both newspaper and network news coverage are highly polarized [...] politicians appear in newspaper coverage more frequently than scientists, whereas politicians and scientists are more equally featured in network news" \citep{hart2020covid19}. The political situation is very different in France than the US however the polarity of news seems to be common as we've just seen that 50\% of French news headlines were labeled as negative by \cite{robertson2021covid}.
+
+\begin{figure}[H]
+      \centering
+      \includegraphics[scale=0.65]{lit_review/eu_2.png}
+      \caption{Positive Sentiment Distribution of COVID-19 News in Europe}
+      \label{fig:eu mood}
+      \emph{Source: \cite{robertson2021covid}}
+\end{figure}
+
+\subsection{French News History}\label{chap:French Press}
+
+France played a major role historically with regards to how news works today. Its first newspaper \emph{Gazette} was founded in 1615 under to reign of king \emph{Louis XIII}. Later in 1835 the \emph{Agence Havas}, now known as \emph{Agence France Presse} was founded. It is the world's oldest news agency and is still active on an international scale to this day. It was founded some years before the law of 29 July 1881 on the freedom of the press which provided a framework for news agencies to publish articles, although amends have been made, this law is still active to this day. Today, news agencies play a major role in news distribution worldwide, they gather news and create reports that are then sold to news organisations such as newspapers, TV companies, governments and more. To this day, four companies own most of the world's information, Agence France Presse (AFP), Associated Press (AP), Reuters and United Press International (UPI).
+
+Through the various regimes, dictators and republics since 1615, the importance of the press went through ups and downs. Some periods included high censorship such as under the French Directory (during the first republic), followed by \emph{Napoléon Bonaparte} (also known as \emph{Napoléon Ier}) who closed most news agencies and used the remaining for spreading propaganda. It also went through brighter periods such as under the third republic of 1871-1929 where it was easier and cheaper to mass produce newspapers and news outlets were uncensored. The last event to have happened historically to French news was during World War 2. During the occupation of German troops, the French Government moved to the city of Vichy (also known as the \emph{Government of Vichy}), collaborationist newspapers have emerged, all of which were taken control of once France was liberated.
 
 \section{Sentiment Analysis}\label{Sentiment Analysis}
 
@@ -26,27 +47,27 @@ Sentiment Analysis (or opinion mining), is "the task of finding the opinions of 
 
 In fact, sentiment analysis has been used in a wide range of topics, including political analyses of social and news media \citep{ahmad2011new}, stock market behaviors \citep{rao2012analyzing,li2014news}, customer sentiment \citep{cambria2013new,mouthami2013sentiment}, fake news detection \citep{bhutani2019fake} and countless more applications.
 
-Languages are full of ambiguity and in particular the French language as some words can have drastically different meanings even though they are written the same, or adding an accent from a large variety of options can drastically change the meaning of a word. On top of this, a select set of words make up the majority of text, in fact, using a frequency-rank, it was found that the first 100 words make up for about 50\% of all of the words in a text cluster \citep{ahmad2007being}, while this number may vary for the french language, this observation means that the interpretation of these highly frequent words is key to extracting sentiment proxies from text. Short text such as tweets \citep{chandrasekaran2020topics} or customer reviews can include a single sentiment or topic. That is not always the case though, as the length of text grows more conflicting opinions are likely found. A simple example of this can be found on a customer review for a product: "I liked using the product, however I wish it didn't break after a day" where clearly both a positive and negative sentiment can be extracted from this review. This shows that there are multiple ways to perform sentiment analysis on text. Document-level computes the overall sentiment of a piece of text such as a tweet or a review, on the other hand, a sentence-level analysis approach can also be taken where a distinction is made between factual sentences (objective phrases) and subjective sentences which mostly contain opinions (subjective phrases) \citep{wilson2009recognizing}. A sentence-level approach is often used for tasks such as text summarizing, on the other hand, a document-level approach is often used for reviews or social media posts. 
+Languages are full of ambiguity and in particular the French language as some words can have drastically different meanings even though they are written the same, or adding an accent from a large variety of options can drastically change the meaning of a word. On top of this, a select set of words make up the majority of text, in fact, using a frequency-rank, it was found that the first 100 words make up for about 50\% of all of the words in a text cluster \citep{ahmad2007being}, while this number may vary for the french language, this observation means that the interpretation of these highly frequent words is key to extracting sentiment proxies from text. Short texts such as tweets \citep{chandrasekaran2020topics} or customer reviews can include a single sentiment or topic. That is not always the case though, as the length of text grows more conflicting opinions are likely to be found. A simple example of this can be found in a customer review for a product: "I liked using the product, however I wish it didn't break after a day" where clearly both a positive and negative sentiment can be extracted from this review. This shows that there are multiple ways to perform sentiment analysis on text. A document-level approach computes the overall sentiment of a piece of text such as a tweet or a review, on the other hand, a sentence-level analysis approach can also be taken where a distinction is made between factual sentences (objective phrases) and subjective sentences which mostly contain opinions (subjective phrases) \citep{wilson2009recognizing}. A sentence-level approach is often used for tasks such as text summarizing, on the other hand, a document-level approach is often used for reviews or social media posts. 
 
 Thankfully, some NLP techniques have now been standardised to help with these issues. One of the most important ones being the use of stemming or lemmatising.
 
 \subsection{Stemming and Lemmatising}
 \label{lemmatization}\label{stemming}
 
-Both of these techniques at their core attempt to do the same result: to simplify a word into a more basic form, the difference lies in how that is performed. Stemming trims a word into its word stem, on the other hand, lemmatising is more complex and transforms a word into its its dictionary form. Table \ref{tab:stem and lemma} shows an example of both techniques. The most popular stemming approach is the five-step Porter Stemmer \citep{porter1980algorithm}. This algorithm however does not apply to languages other than English. With regards to lemmatising, rule-based taggers are very commonly found, these probabilistic models have obtained high accuracy and are very commonly used \citep{brill1992simple}. This project makes use of TreeTagger, a multilingual tagger implemented using decision trees \citep{schmid2013probabilistic}. Another tool, SpaCy\footnote{\url{https://spacy.io/}}, an open source multilingual package which includes a lemmatizer was also used. After some comparison, it was found that the SpaCy implementation resulted in a higher rate of word matching so it was ultimately used to compute the results throughout this study.
+Both of these techniques at their core attempt to obtain the same result: to simplify a word into a more basic form, the difference lies in how that is performed. Stemming trims a word into its word stem, on the other hand, lemmatising is more complex and transforms a word into its its dictionary form. Table \ref{tab:stem and lemma} shows an example of both techniques. The most popular stemming approach is the five-step Porter Stemmer \citep{porter1980algorithm}. This algorithm however does not apply to languages other than English. With regards to lemmatising, rule-based taggers are very commonly found, these probabilistic models have obtained high accuracy and are very commonly used \citep{brill1992simple}. This project makes use of TreeTagger, a multilingual tagger implemented using decision trees \citep{schmid2013probabilistic}. Another tool, SpaCy\footnote{\url{https://spacy.io/}}, an open source multilingual package which includes a lemmatizer was also used. After some comparison, it was found that the SpaCy implementation resulted in a higher rate of word matching so it was ultimately used to compute the results throughout this study.
 
-While stemming is much easier to apply, much more efficient to compute and does not require context, it can miss valuable information, especially when applied to the French language which contains a very high amount of irregular verbs or adjectives. On the other hand, lemmatising is much harder to apply as it requires context of the word in question within the sentence. However it is also much more representative of the meaning of each word. 
+While stemming is much easier to apply, much more efficient to compute and does not require context, it can miss valuable information, especially when applied to the French language which contains a very high amount of irregular verbs or adjectives. This can be seen in the example shown in the table comparing both approaches (Table \ref{tab:stem and lemma}). On the other hand, lemmatising is much harder to apply as it requires context of the word in question within the sentence. However it is also much more representative of the meaning of each word. 
 
-\begin{table}[htb]
-\caption{Example of Stemming an Lemmatising}
-\label{tab:stem and lemma}
+\begin{table}[H]
 \centering
-\begin{tabular}{@{}|ccc|@{}}
+\begin{tabular}{@{}ccc@{}}
 \toprule
 \textbf{Input} & \textbf{Stem} & \textbf{Lemma} \\ \midrule
 Livre (to deliver) & livr & livrer \\
 Livre (a book) & livr & livre \\ \bottomrule
 \end{tabular}
+\caption{Comparison of Stemming an Lemmatising}
+\label{tab:stem and lemma}
 \end{table}
 
 \subsection{Computing Sentiment}
@@ -81,7 +102,7 @@ As previously mentioned, there are few published French general dictionaries, th
 
 The French Expanded Emotion Lexicon (FEEL) \citep{abdaoui2017feel}, is a lexicon that is built from the semi-automatic translation of the English NRC Word Emotion Association Lexicon \citep{mohammad2013crowdsourcing}. The study started by querying online translation tools to create a first version, then, "a human professional translator manually validated the automatically obtained entries and the associated emotions" \citep{abdaoui2017feel}. It was found that over 94\% of entries were correct in the first version. This study makes available the obtained dictionary and concludes that it is possible to obtain consistent, quality dictionaries with the use of online translation tools. One of the authors, Amine Abdaoui, was helpful and provided useful pointers on how best to apply the FEEL lexicon in this study through an email conversation.
 
-Word entries of the FEEL lexicon include a polarity of "positive" or negative as well as a set of emotions: joy, surprise, anger, disgust, sadness and fear. The associated weight for each of these emotions is either 0 or 1. More than 80\% of word entries include a single term, with the remaining mostly consisting of two terms and a minority consisting of three terms.
+Word entries of the FEEL lexicon include a polarity of positive or negative as well as a set of emotions: joy, surprise, anger, disgust, sadness and fear. The associated weight for each of these emotions is either 0 or 1. More than 80\% of word entries include a single term, with the remaining mostly consisting of two terms and a minority consisting of three terms.
 
 \subsection{Polarimots}\label{chap: polarimots}
 
@@ -95,7 +116,7 @@ Diko is a lexicon that was built form a game: "LikeIt". LikeIt is "a GWAP (Game 
 
 \section{Statistical Methods}\label{Statistical Methods}
 
-The use of various statistical methods represent a key element for this thesis, as specified in the research objectives (Chapter \ref{chap: Research Objectives}). Such methods provide the link between observed values and identifying potential relationships. The various statistical methods used throughout this thesis will be introduced in the following sections.
+The use of various statistical methods represent a key element for this thesis, as specified in the research objectives (Chapter \ref{chap: Research Objectives}). Such methods provide the link between observed values and identifying potential relationships.
 
 \subsection{Core Statistics}
 
@@ -103,10 +124,10 @@ This first section introduces key, core statistic measures which are used throug
 
 \subsubsection{Mean}
 
-The mean is a very well known statistical measure which consists of the sum of the deviation of all of the values in a sample by the size of that sample. In other words, it is the average value in a sample. It is commonly referred to as $\bar{x}$ for a sample as well as $\mu$ for a population. It can be written as such:
+The mean is a very well known statistical measure which consists of the sum of the deviation of all of the values in a sample by the size of that sample. In other words, it is the average value in a sample. It is commonly referred to as $\bar{x}$ for a sample as well as $\mu$ for a population.
 
 \begin{equation}
-    \mu = \bar{x} = \frac{1}{N}\sum^{N}_{i=1} x_{i}
+    \bar{x} = \frac{1}{N}\sum^{N}_{i=1} x_{i}
 \end{equation}
 Where N is the sample size and $x_{i}$ represents the ith value in the sample.
 
@@ -145,7 +166,7 @@ Where N is the sample size, $x_{i}$ is the ith data point from the sample, $\bar
 
 \subsubsection{Kurtosis}
 
-Kurtosis is a measure of whether a sample is heavily tailed or lightly tailed relative to a normal distribution. A high kurtosis value infers that a data set will have a large amount of outliers. On the other hand a low kurtosis value indicates a data set with very few outliers. The kurtosis for a standard normal distribution is 3, hence a metric often used is referred to as the "excess kurtosis" and takes the value $kurtosis - 1$.
+Kurtosis is a measure of whether a sample is heavily tailed or lightly tailed relative to a normal distribution. A high kurtosis value infers that a data set will have a large amount of outliers. On the other hand a low kurtosis value indicates a data set with very few outliers. The kurtosis for a standard normal distribution is 3, hence a metric often used is referred to as the "excess kurtosis" and takes the value $kurtosis - 3$.
 
 Mathematically, the kurtosis value is calculated as such:
 \begin{equation}
@@ -154,15 +175,11 @@ Mathematically, the kurtosis value is calculated as such:
 
 \subsubsection{P-Value}
 
-The P-Value is used in null hypothesis significance testing. Assuming a null hypothesis $H_{0}$, a hypothesis of no difference, and a second hypothesis $H_{1}$, representing the opposite of the null hypothesis. The P-Value is the probability of finding greater results when the null hypothesis $H_{0}$ is true. A level of significance is picked, typically one of 0.1, 0.05 or 0.01. A p-value below the threshold, then we can conclude that there is significant evidence to reject the null hypothesis $H_{0}$. This study uses a significance level of 5\% (p-value of 0.05) by default unless specified otherwise.
-
-\subsubsection{F Value}
-
-The F value is helpful in order to verify that the results observed are statistically significant. It is used along with the P-value and help determine if a newly added variable to a model improve its accuracy.
+The P-Value is used in null hypothesis significance testing. Assuming a null hypothesis $H_{0}$, a hypothesis of no difference, and a second hypothesis $H_{1}$, representing the opposite of the null hypothesis. The P-Value is the probability of finding greater results when the null hypothesis $H_{0}$ is true. A level of significance is picked, typically one of 0.1, 0.05 or 0.01. A p-value below the threshold implies that we can conclude that there is significant evidence to reject the null hypothesis $H_{0}$. This study uses a significance level of 5\% (p-value of 0.05) unless specified otherwise.
 
 \subsubsection{Correlation}
 
-This study makes use of the Pearson product-moment correlation coefficient. Correlation (r) quantifies linear relationship between two data sets. Its values ranges between -1 and 1. A correlation value of zero indicates no linear relationship between the two sets of data. A positive correlation indicates that both variables move in the same direction, it shows that when one becomes larger or smaller, so does the other. On the other hand, a negative correlation shows the opposite: both variables move in the opposite directions. 
+This study makes use of the Pearson product-moment correlation coefficient. Correlation (r) quantifies linear relationship between two data sets. Its values range between -1 and 1. A correlation value of zero indicates no linear relationship between the two sets of data. A positive correlation indicates that both variables move in the same direction, it shows that when one becomes larger or smaller, so does the other. On the other hand, a negative correlation shows the opposite: both variables move in the opposite directions. 
 A larger distance between zero and the correlation value indicates a stronger relationship, this is true for both positive and negative correlations. The coefficient can be computed using the formula below.
 
 \begin{equation}
