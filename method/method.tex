@@ -13,7 +13,7 @@ This section will go through an overview of the design choices that were made th
 
 \section{Data Gathering}
 
-The first part of this subsection addresses the process of identifying, gathering and organising data such as to create a quality corpus and to achieve the research objective: \emph{Gather a large corpus containing high quality French news articles relevant to COVID-19}.
+The first part of this subsection addresses the process of identifying, gathering and organising data such as to create a quality corpus and ultimately achieve the research objective: \emph{Gather a large corpus containing high quality French news articles relevant to COVID-19}.
 
 \subsection{Relevant Articles of Quality}
 
@@ -57,7 +57,7 @@ With regards to how big the corpus should be, there are three questions to answe
 
 \subsubsection{Corpus Size Assessment}
 
-It is important to build a corpus of a substantial size such as to avoid any potential biases which can occur with small sample sizes. It is also important to include both national and regional publications. While some types of regional publications consist mostly of national news, most regional publications are found to differ significantly in content when compared to national publications \cite{ballarini2008presse}. France is home to hundreds of different news sources, when considering all the different type of news publications such as daily, weekly, biweekly, monthly and more. Over 200 of which have business agreements with LexisNexis News \& Business. This makes for a sufficient selection of sources for this corpus.
+It is important to build a corpus of a substantial size such as to avoid any potential biases which can occur with small sample sizes. It is also important to include both national and regional publications. While some types of regional publications consist mostly of national news, most regional publications are found to differ significantly in content when compared to national publications \citep{ballarini2008presse}. France is home to hundreds of different news sources, when considering all the different type of news publications such as daily, weekly, biweekly, monthly and more. Over 200 of which have business agreements with LexisNexis News \& Business. This makes for a sufficient selection of sources for this corpus.
 
 With regards to the quantity of articles to gather per source, the goal is to retrieve as many articles per source matching the relevancy criteria. LexisNexis makes it possible to retrieve all of the articles matching the relevancy criteria for the selected sources which removes the need of selecting a random sample. This will enable analysis on which sources publish the most COVID-19 related articles as well as the variations in the amount of articles published over key events or periods. It is worth noting that this may introduce a bias in other analyses as some sources publish much more than others, it remains however necessary for the corpus built to be large enough.
 
@@ -69,9 +69,9 @@ A small corpus was originally built by manually downloading articles matching th
 
 A scraper was built instead to automate the process of downloading those articles. A total of 369,569 articles listed on LexisNexis match the selected filters. As a service, LexisNexis enables downloading articles in batches of up to 500. It also enables options into the formatting of documents such link embedding, text formatting and more. As part of this system, the documents will be downloaded in rich text format (RTF), references will not be embedded as links such as to simplify the document parsing process, and articles will be saved as individual files which will be compressed as a ZIP file grouping 500 articles each. Note that all of these are options to be set by the scrapper on the options dialog before triggering a download.
 
-The technologies used to build the scraper include the Google Chrome browser, its associated "ChromeDriver" which enables triggering browser actions programmatically, the Python programming language and finally Selenium. Selenium is an open-source framework which makes performing automated browser actions easier. Figure \ref{fig:scraper pseudo code} shows a simplified set of actions performed by this scraper in pseudo code:
+The technologies used to build the scraper include the Google Chrome browser, its associated "ChromeDriver"\footnote{\url{https://chromedriver.chromium.org/}} which enables triggering browser actions programmatically, the Python programming language and finally Selenium. Selenium\footnote{\url{https://www.selenium.dev/}} is an open-source framework which makes performing automated browser actions easier. Figure \ref{fig:scraper pseudo code} shows a simplified set of actions performed by this scraper in pseudo code format:
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \begin{BVerbatim}
 load_url()
@@ -110,7 +110,7 @@ Running this system for a week was sufficient for the system to download all of 
 
 \subsubsection{Organising Data}
 
-This section will include details as to how the scraper system organises downloaded files as well as how the downloaded articles were aggregated to enable easy and fast operations.
+This section will include details on how the scraper system organises downloaded files as well as how the downloaded articles were aggregated to enable easy and fast operations.
 
 Once a download finished successfully, the scrapper moves that file from the download directory to the output directory matching the current batch of articles being downloaded. The output directories include all of the indexed files that were previously downloaded. When moved to an output directory, the files are renamed to include information about the batch they come from as well as the offset used to obtain this file. This indexing enables the scraper to keep track of which files have and haven't been downloaded, hence making sure that no individual article is downloaded twice.
 
@@ -118,7 +118,7 @@ The next task is to extract relevant information from the 740 ZIP files, contain
 
 The process of loading the data into a structured, relational database also required important design choices. Similar to the scrapper, care must be placed in loading each article no more than once, and, given the amount of data to be handled, the system must be able to resume work on error. The procedure for loading data is detailed in Figure \ref{database loader}. The approach writes important data to text files to keep track of which ZIP file is currently being processed and a separate file to keep track of the list of ZIP files which have been already loaded. By doing so the system knows at all times what work has been done and what is remaining, hence enabling the system to crash and resume work where it left off. The final detail is that after a specific RTF file containing a single article was parsed and loaded into the database, that file is deleted to make sure not to load it twice.
 
-\begin{figure}[h!]
+\begin{figure}[H]
       \centering
       \includegraphics[scale=0.7]{method/db_loader.png}
       \caption{Loading Articles Into MySQL}
@@ -149,7 +149,7 @@ In order to extract sentiment proxies specific to the COVID-19 pandemic, three s
 
 \subsubsection{Virus}
 
-The Virus dictionary is the largest out of the three as it is also the most vast. The aim of this lexicon is to enable the measurement of virus-related words. It consists of words, expressions and objects that have been made popular or used in the context of the COVID-19 pandemic. The total lexicon includes seventy five words, Table \ref{tab:virus lexicon} shows twenty five entries. Care was put in reducing overlap between the three dictionaries, since this one was the largest, death and vaccination related terms have not been included in this lexicon.
+The Virus dictionary is the largest lexicon out of the three as it is also the most vast. The aim of this lexicon is to enable the measurement of virus-related words. It consists of words, expressions and objects that have been made popular or used in the context of the COVID-19 pandemic. The total lexicon includes seventy five words, Table \ref{tab:virus lexicon} shows twenty five entries. Care was put in reducing overlap between the three dictionaries, since this one was the largest, death and vaccination related terms have not been included in this lexicon.
 
 
 \begin{table}[H]
@@ -248,11 +248,11 @@ ensevelir     & meurtre         &                \\ \bottomrule
 \end{table}
 \subsection{Sentiment Analysis Pipeline}
 
-Originally the text analysis software Rocksteady \cite{ahmad2014rocksteady} was used. Rocksteady is a lexicon based affect analysis system which was developed in Trinity College Dublin, Ireland. Once the scraper system (Chapter \ref{Collecting Data}) was put in place it became apparent that a more flexible system was required. Rocksteady requires the aggregation of articles into text files which comes with limitations, handling 369,569 articles in the form of text files is very expensive, whether it is to aggregate the corpus into a single or many files such that Rocksteady can read the corpus, reading all of that data on each load, computing all of the sentiments for the whole corpus at once which could run into memory issues as attempting to compute sentiment for a large amount of articles requires a flexible system such that sentiment can be computed through a data pipeline. In light of this, the articles were parsed, organised and loaded into a MySQL database as described in Chapter \ref{Collecting Data}. This system also enables extremely fast article retrieval as well as very useful data aggregation methods such as date grouping, source grouping and more within seconds. The following sections explain in detail how the system was implemented.
+Originally the text analysis software Rocksteady \citep{ahmad2014rocksteady} was used. Rocksteady is a lexicon based affect analysis system which was developed in Trinity College Dublin, Ireland. Once the scraper system (Chapter \ref{Collecting Data}) was put in place it became apparent that a more flexible system was required. Rocksteady requires the aggregation of articles into text files which comes with limitations, handling 369,569 articles in the form of text files is very expensive, whether it is to aggregate the corpus into a single or many files such that Rocksteady can read the corpus, reading all of that data on each load, computing all of the sentiments for the whole corpus at once which could run into memory issues as attempting to compute sentiment for a large amount of articles requires a flexible system such that sentiment can be computed through a data pipeline. In light of this, the articles were parsed, organised and loaded into a MySQL database as described in Chapter \ref{Collecting Data}. Using a MySQL system also enables extremely fast article retrieval as well as very useful data aggregation methods such as date grouping, source grouping and more within seconds. The following sections explain in detail how the system was implemented.
  
 \subsubsection{Lexicon Handling}
 
-The first part of performing lexicon based sentiment analysis on an article is to first load and process the various lexica used. As part of this project three specialist dictionaries (Chapter \ref{Custom Dicts}) were used. FEEL, Diko as well as Polarimots (Chapter \ref{French Lexicons}) are three other lexica which were used to measure polarity as well as other emotions where possible.
+The first part of performing lexicon based sentiment analysis on an article is to first load and process the various lexica used. As part of this project three specialist dictionaries (Chapter \ref{Custom Dicts}) were used. FEEL, Diko as well as Polarimots (Chapter \ref{French Lexicons}) are three more general lexica which were used to measure polarity as well as other emotions where possible. As previously mentioned, overlap between general and specialised lexicons was removed from the general lexicons.
 
 With regards to the custom dictionaries, the process for loading each lexicon was to load the text file containing the lexicon. These lexica are built in the form of one word per line. Splitting the resulting string using the new line character yields an array of all of the words within that lexicon. No weight was associated for each of the words so the count of occurrences within an article was used as the final score for each lexicon.
 
@@ -260,7 +260,7 @@ FEEL, Diko and Polarimots required more processing. Each of these lexicons had s
 
 The FEEL lexicon includes for each word a polarity (negative or positive) as well as a value of 1 or 0 for the following emotions: joy, fear, sadness, anger, surprise and disgust. For this lexicon a similar approach to the custom dictionaries was used: a count of occurrences for each of the emotions as well as the polarity occurrences.
 
-The Diko Lexicon includes for each word a number of vote for its polarity (negative, positive, neutral). These numbers were used to compute a score for each word, the following points were taken in consideration:
+The Diko Lexicon includes for each word a number of vote for its polarity (negative, positive, neutral). These votes were used to compute a score for each word, the following points were taken into account:
 \begin{enumerate}
     \item Amount of total votes relative to the entire lexicon
     \item Positive / negative vote frequency
@@ -282,7 +282,7 @@ Where $\mu$ is the mean for total votes on the lexicon and $\sigma$ is its stand
 \end{equation}
 Where $\#neg$, $\#neut$ $\#pos$ is the number of negative, neutral and positive votes respectively for a word entry, $\sigma$ is the standard deviation for total votes in the lexicon.
 
-One final detail is that the Diko dictionary is very large, containing over 1.2 million word entries. Using the entire dictionary is not of much use and unrealistic on a large corpus. To do so, words with a total vote count below 500 were skipped as well as words with scores in the range of $-1 < score < 1$. This returns a total of 24,643 words to use from this lexicon.
+One final detail is that the Diko dictionary is very large, containing over 1.2 million word entries. Using the entire dictionary is not of much use and unrealistic on a large corpus. To solve this, words with a total vote count below 500 were skipped as well as words with scores in the range of $-1 < score < 1$. This returns a total of 24,643 words to use from this lexicon.
 
 Last but not least, the Polarimots dictionary includes for each word a polarity which can be one of neutral, positive and negative. Also associated with each word is a reliability metric of either 100\% 66\% or 33\%. This reliability metric was divided by 100 such as to obtain 0.33, 0.66 and 1 which makes for the weights used with this dictionary.
 
@@ -298,35 +298,40 @@ It was very important to save sentiment outputs to the database for two main rea
 
 \subsubsection{Text Cleaning}
 
-Articles are put through a series of steps that modify them in some way in order to apply sentiment analysis to it in the best of conditions. First, the articles are converted to lowercase, this step is not always necessary but the lexica used all use lowercase words. The second step is to remove stop words and punctuation. The list of stop words used come from SpaCy's French language pipeline (Chapter \ref{lemmatization}). Finally, the remaining words are lemmatized also using SpaCy.
+Articles are put through a series of steps that modify them in some way in order to compute sentiments in the best of conditions. First, the articles are converted to lowercase, this step is not always necessary but the lexica used all use lowercase words. The second step is to remove stop words and punctuation. The list of stop words used come from SpaCy's French language pipeline (Chapter \ref{lemmatization}). Finally, the remaining words are lemmatized also using SpaCy.
 
 \subsubsection{Computing Sentiment}
 
-This final step receives a processed and cleaned text and outputs a set of sentiment scores. The first step to do so is to count the occurrences of the lexicon words within the article. While originally a set of nested for loops were put in place to do so. After some brief manual experiments, using regular expressions was found to be much faster. Hence from a provided lexicon, a single regular expression is compiled. The regular expression matches the following pattern:
-\begin{center}
-\begin{verbatim}(\bhello\b|\bworld\b)\end{verbatim}
-\end{center}
+This final step receives a processed and cleaned text and outputs a set of sentiment scores. The first step to do so is to count the occurrences of the lexicon words within the article. While originally a set of nested for loops were put in place to do so. After some brief manual experiments, using regular expressions was found to be much faster. Hence from a provided lexicon, a single regular expression is compiled. The regular expression matches the pattern seen in Figure \ref{fig:regex}.
 
-The parentheses mark the group of the regular expression, the above expression would match the words "hello" and "world". Notice that they are wrapped in $\backslash$ followed by "b", this operator in regular expressions makes sure to only match entire words, hence making sure that a white space character is present before and after the word within the article. The final detail is that all of the lexicon's words are separated by a "|" operator which is the equivalent of the "OR" operation in a regular expression.
+\begin{figure}[H]
+\centering
+\begin{BVerbatim}
+(\bhello\b|\bworld\b)
+\end{BVerbatim}
+\caption{Regular Expression with Two Terms}
+\label{fig:regex}
+Lexicons were mapped to a regular expression of this format in order to find occurrences within news articles.
+\end{figure}
+
+The parentheses mark the group of the regular expression, the above expression would match the words "hello" and "world". Notice that they are wrapped in $\backslash$ followed by "b", this operator in regular expressions makes sure to only match entire words, hence verifying that a white space character is present before and after the word within the article. The final detail is that all of the lexicon's words are separated by a "|" operator which is the equivalent of the "OR" operation in a regular expression.
 
 Using a lexicon's compiled regular expression as described above, we obtain a set of paired values, including a subset of the lexica words and its associated number of occurrences within the article.
 All that is left is to iterate through those matches, for each word retrieve the associated weight, make sure to multiply it by the number of occurrences and keep a running total of all of the sentiments included within the lexicon used.
 
-Some sentiments systems will act as a classifiers, whether it is machine learning or lexicon based, by returning "positive" or "negative" for a specific article. This system does not and keeps both the positive and negative scores obtained from an article, it provides more details useful to the statistical analysis.
+Some sentiment systems will act as a classifiers, whether it is machine learning or lexicon based, by returning "positive" or "negative" for a specific article. This system does not and keeps both the positive and negative scores obtained from an article, it provides more details useful to the statistical analysis.
 
 \subsection{Output Aggregating}\label{chap: output aggregating}
 
-The final step of the sentiment analysis system is to format the output such that it can be used for a statistical analysis. To do so, information about the corpus as well as its computed sentiment scores are grouped daily and retrieved from the database. Official data from the French government\footnote{\url{https://www.data.gouv.fr/en/datasets/donnees-relatives-a-lepidemie-de-covid-19-en-france-vue-densemble/}} is appended to the sentiment data. Metrics used from the French government include: the number of confirmed COVID-19 cases, number of deaths and the number of first vaccine injections, corresponding to the data points "casConfirmes", "deces" and "nouvellesPremieresInjections" respectively in the summary data set. This outputs a set of daily data points which includes various sentiments and official COVID-19 French metrics.
+The final step of the sentiment analysis system is to format the output such that it can be used for statistical analysis. To do so, information about the corpus as well as its computed sentiment scores are grouped daily and retrieved from the database. Official data from the French government\footnote{\url{https://www.data.gouv.fr/en/datasets/donnees-relatives-a-lepidemie-de-covid-19-en-france-vue-densemble/}} is appended to the sentiment data. Metrics used from the French government include: the number of confirmed COVID-19 cases, number of deaths and the number of first vaccine injections, corresponding to the data points "casConfirmes", "deces" and "nouvellesPremieresInjections" respectively in the summary data set. This outputs a set of daily data points which includes various sentiments and official COVID-19 French metrics.
 
 \section{Statistical Analysis}\label{chap: stat analysis}
 
-This final subsection of this chapter will cover details of the last remaining research objective: \emph{Conduct statistical analysis on the results in order to identify and quantify potential relationships}.
+The final subsection will cover details of the last remaining research objective: \emph{Conduct statistical analysis on the results in order to identify and quantify potential relationships}.
 
 \subsection{Vector AutoRegression}
 
-The tool used for statistical analysis in this project is the GNU Regression, Econometrics and Time-series Library (GRETL). It is a powerful open-source tool for statistical analysis, it was picked for this project for its performance and accuracy.
-
-The process for building each model involved a few steps. They will be detailed in the following sections.
+The tool used for statistical analysis in this project is the GNU Regression, Econometrics and Time-series Library (GRETL). It is a powerful open-source tool for statistical analysis which was picked for this project for its performance and accuracy. The process for building each model involved a few steps. They will be detailed in the following sections.
 
 \subsubsection{Unit Root Testing}
 
@@ -334,9 +339,9 @@ Before any regression can be performed, it is is important to check all of the v
 
 \subsubsection{Lag Selection}
 
-The following step is to perform lag selection, and in fact, a lag order is required to perform the above unit root testing. It is critical to select an appropriate lag length as it will affect heavily the obtained results. An incorrect lag value can result in over-fitting which in undesirable and causes an increase in the mean squared error. On the other hand, under-fitting is also undesirable and may often result in autocorrelation-errors.
+The following step is to perform lag selection, and in fact, a lag order is required to perform the above unit root testing. It is critical to select an appropriate lag length as it will heavily affect the obtained results. An incorrect lag value can result in over-fitting which is undesirable and causes an increase in the mean squared error. On the other hand, under-fitting is also undesirable and may result in autocorrelation-errors.
 
-There are three popular approaches to optimal selection. Akaike Information Criterion (AIC), the Bayesian Information Criterion (BIC) and the Hannan–Quinn information criterion (HQC). All three criteria are further explained in Chapter \ref{chap:lag selection lr}. Due to the specific use cases of the three methods, lag selection will be approached on a model by model basis.
+There are three popular approaches to optimal lag selection. Akaike Information Criterion (AIC), the Bayesian Information Criterion (BIC) and the Hannan–Quinn information criterion (HQC). All three criteria are further explained in Chapter \ref{chap:lag selection lr}. Due to the specific use cases of the three methods, lag selection will be approached on a model by model basis.
 
 \subsubsection{Model Building}
 

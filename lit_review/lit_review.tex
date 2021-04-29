@@ -179,7 +179,7 @@ The P-Value is used in null hypothesis significance testing. Assuming a null hyp
 
 \subsubsection{Correlation}
 
-This study makes use of the Pearson product-moment correlation coefficient. Correlation (r) quantifies linear relationship between two data sets. Its values range between -1 and 1. A correlation value of zero indicates no linear relationship between the two sets of data. A positive correlation indicates that both variables move in the same direction, it shows that when one becomes larger or smaller, so does the other. On the other hand, a negative correlation shows the opposite: both variables move in the opposite directions. 
+This study makes use of the Pearson product-moment correlation coefficient. Correlation (r) quantifies linear relationship between two data sets. Its values range between -1 and 1. A correlation value of zero indicates no linear relationship between the two sets of data. A positive correlation indicates that both variables move in the same direction, it shows that when one becomes larger or smaller, so does the other. On the other hand, a negative correlation shows the opposite: both variables move in opposite directions. 
 A larger distance between zero and the correlation value indicates a stronger relationship, this is true for both positive and negative correlations. The coefficient can be computed using the formula below.
 
 \begin{equation}
@@ -189,7 +189,7 @@ Note that both sets of data must be of the same size. Here N is the sample size 
 
 \subsubsection{Z-Score}
 
-The Z-Score (Z), also known as the standard score, is a value which shows a measure of the a value's relationship to the mean of the data set it belongs to. It represents the number of standard deviations by which a value is above or below the mean value.
+The Z-Score (Z), also known as the standard score, is a value which shows a measure of a value's relationship to the mean of the data set it belongs to. It represents the number of standard deviations by which a value is above or below the mean value.
 
 \begin{equation}
     Z = \frac{x - \bar{x}}{S}
@@ -198,11 +198,11 @@ Where x is a value of the data set, $\bar{x}$ is the mean and $S$ is the standar
 
 \subsection{VAR Analysis}\label{chap:var lit rv}
 
-This section introduces the Vector autoregression (VAR) statistical model as well as related statistic measures useful in order to test and evaluate VAR models.
+This section introduces the Vector autoregression (VAR) statistical model as well as related statistic measures used in order to test and evaluate VAR models.
 
 \subsubsection{Vector AutoRegression}
 
-VAR models were originally discovered and used for forecasting economic time series. Since its inception, VAR models have been used in various different applications successfully with some including sentiment analysis proxies \citep{georgoula2015using,zhao2015computational}. VAR works by using previous values of a time series in order to forecast future values.
+VAR models were originally discovered and used for forecasting economic time series. Since its inception, VAR models have been used in various different applications successfully, some including sentiment analysis proxies \citep{georgoula2015using,zhao2015computational}. VAR works by using previous values of a time series in order to forecast future values.
 
 %Two types of variables:
 %Endogenous variables have values that are determined by other variables in the system
@@ -229,7 +229,7 @@ In terms of which criterion to trust, the AIC is commonly seen as the most accur
 
 \subsubsection{\boldsymbol{R^2} and Adjusted \boldsymbol{R^2}}
 
-Both $R^2$ and the adjusted $R^2$ are statistic measures useful when evaluating a model. They show how accurately a model fits its data. The difference being that adjusted $R^2$ also depends on the number of independent variables in the model. Adding more variables to a model will increase both the $R^2$ and adjusted $R^2$ values if those variables improve the model, on the other had the measures will decrease when the added variables make the model predictions worse.
+Both $R^2$ and the adjusted $R^2$ are statistic measures useful when evaluating a model. They show how accurately a model fits its data. The difference being that adjusted $R^2$ also depends on the number of independent variables in the model. Adding more variables to a model will increase both the $R^2$ and adjusted $R^2$ values if those variables improve the model, on the other hand the measures will decrease when the added variables make the model predictions worse.
 
 \begin{equation}
     R^2 = 1 - \frac{RSS}{TSS}
@@ -258,7 +258,7 @@ The Durbin-Watson statistic is a measure named after its inventors after James D
 
 \subsubsection{Unit Root Testing}
 
-Two tests are useful in the context of this study in order to test variables for the presence of unit roots in time series. This test is applied in order to test the stationary of a variable. A variable is considered stationary when  its core statistical measures (such as the mean, variance to name a few) do not change over time. Making sure that variables are stationary enables accurate modeling.
+Two tests are useful in the context of this study in order to test variables for the presence of unit roots in time series. This test is applied in order to test the stationary of a variable. A variable is considered stationary when  its core statistical measures such as the mean or the variance do not change over time. Making sure that variables are stationary enables accurate modeling.
 
 The first test performed is the Augmented Dickey–Fuller (ADF) test \citep{fuller2009introduction}. This test makes use of two hypotheses, the null hypothesis $H_0$ states the presence of a unit root in the time series sample. In our situation, the alternate hypothesis is that the variable tested is stationary.
 
@@ -288,10 +288,10 @@ T = $\infty$ & -3.43 & -2.86 & -3.96 & -3.41 \\ \bottomrule
 \label{tab:adf values}
 \end{table}
 
-The second test is the Engle-Granger cointegration test \citep{engle1987co}. The residuals are tested for unit roots using the previously described ADF test. A second step checks that a linear combination of non stationary variables is stationary. It starts by estimating the linear regression using a technique such as ordinary least squares. A stationary test is then performed on this estimated model as well as 
+The second test is the Engle-Granger cointegration test \citep{engle1987co}. The residuals are tested for unit roots using the previously described ADF test. A second step checks that a linear combination of non stationary variables is stationary. It starts by estimating the linear regression using a technique such as ordinary least squares. A stationary test is then performed on this estimated model.
 
-When the variables are cointegrated (there exists a correlation between the time series variables) then a vector error correction model (VECM) shall be used. In this study this has not been the case. On the other hand, when the cointegration test fails, then non-stationary variables can be differenciated as a last recourse in order to make the variable stationary.
+When the variables are cointegrated (there exists a correlation between the time series variables) then a vector error correction model (VECM) shall be used. In this study this has not been the case. On the other hand, when the cointegration test fails, then non-stationary variables can be differenciated as a last recourse in order to make the variables stationary.
 
 \subsubsection{Granger Causality Test}
 
-The Granger causality test is a statistical test with two hypotheses. It is useful in order to determine if one time series helps to forecast another. The test enables to state that a variable X Granger-causes another variable Y if it can be shown that X values provide statistically significant information about the future Y values. Usually the methods used in order to test this statement is a series of F-tests on lagged values.
+The Granger causality test is a statistical test with two hypotheses. It is useful in order to determine if one time series helps to forecast another. The test enables to state that a variable X Granger-causes another variable Y if it can be shown that X provides statistically significant information about the future Y values. Usually the methods used in order to test this statement is a series of F-tests on lagged values.
